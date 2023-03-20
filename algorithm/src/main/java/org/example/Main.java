@@ -8,7 +8,10 @@ public class Main {
     static Solution solution = new Solution();
 
     public static void main(String[] args) throws IOException {
+        System.out.println(System.getProperty("user.dir"));
+
         System.out.println(Long.valueOf(null));
+
     }
 
     private void test1(){
