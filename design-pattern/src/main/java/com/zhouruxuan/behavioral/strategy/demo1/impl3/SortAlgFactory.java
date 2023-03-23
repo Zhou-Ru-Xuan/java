@@ -1,6 +1,6 @@
-package com.zhouruxuan.behavioral.strategy.impl4;
+package com.zhouruxuan.behavioral.strategy.demo1.impl3;
 
-import com.zhouruxuan.behavioral.strategy.*;
+import com.zhouruxuan.behavioral.strategy.demo1.*;
 
 import java.util.HashMap;
 import java.util.Map;

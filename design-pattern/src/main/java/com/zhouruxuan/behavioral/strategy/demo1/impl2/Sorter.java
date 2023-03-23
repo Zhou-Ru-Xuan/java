@@ -1,6 +1,6 @@
-package com.zhouruxuan.behavioral.strategy.impl2;
+package com.zhouruxuan.behavioral.strategy.demo1.impl2;
 
-import com.zhouruxuan.behavioral.strategy.*;
+import com.zhouruxuan.behavioral.strategy.demo1.*;
 
 import java.io.File;
 

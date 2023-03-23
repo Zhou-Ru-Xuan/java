@@ -1,7 +1,7 @@
-package com.zhouruxuan.behavioral.strategy.impl4;
+package com.zhouruxuan.behavioral.strategy.demo1.impl4;
 
-import com.zhouruxuan.behavioral.strategy.ISortAlg;
-import com.zhouruxuan.behavioral.strategy.impl3.SortAlgFactory;
+import com.zhouruxuan.behavioral.strategy.demo1.ISortAlg;
+import com.zhouruxuan.behavioral.strategy.demo1.impl3.SortAlgFactory;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -11,9 +11,9 @@ public class Sorter {
   private static final long GB = 1000 * 1000 * 1000;
   private static final List<AlgRange> algs = new ArrayList<>();
   static {
-    algs.add(new AlgRange(0, 6*GB, SortAlgFactory.getSortAlg("QuickSort")));
-    algs.add(new AlgRange(6*GB, 10*GB, SortAlgFactory.getSortAlg("ExternalSort")));
-    algs.add(new AlgRange(10*GB, 100*GB, SortAlgFactory.getSortAlg("ConcurrentExternalSort")));
+    algs.add(new AlgRange(0, 6*GB, com.zhouruxuan.behavioral.strategy.demo1.impl3.SortAlgFactory.getSortAlg("QuickSort")));
+    algs.add(new AlgRange(6*GB, 10*GB, com.zhouruxuan.behavioral.strategy.demo1.impl3.SortAlgFactory.getSortAlg("ExternalSort")));
+    algs.add(new AlgRange(10*GB, 100*GB, com.zhouruxuan.behavioral.strategy.demo1.impl3.SortAlgFactory.getSortAlg("ConcurrentExternalSort")));
     algs.add(new AlgRange(100*GB, Long.MAX_VALUE, SortAlgFactory.getSortAlg("MapReduceSort")));
   }
 

@@ -1,6 +1,4 @@
-package com.zhouruxuan.behavioral.strategy;
-
-import com.zhouruxuan.behavioral.strategy.ISortAlg;
+package com.zhouruxuan.behavioral.strategy.demo1;
 
 public class QuickSort implements ISortAlg {
   @Override

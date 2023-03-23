@@ -1,6 +1,6 @@
-package com.zhouruxuan.behavioral.strategy.impl3;
+package com.zhouruxuan.behavioral.strategy.demo1.impl3;
 
-import com.zhouruxuan.behavioral.strategy.ISortAlg;
+import com.zhouruxuan.behavioral.strategy.demo1.ISortAlg;
 
 import java.io.File;
 
