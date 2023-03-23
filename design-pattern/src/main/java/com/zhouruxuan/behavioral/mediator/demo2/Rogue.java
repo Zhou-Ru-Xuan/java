@@ -22,33 +22,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.zhouruxuan.structural.proxy.demo2;
-
-import lombok.extern.slf4j.Slf4j;
+package com.zhouruxuan.behavioral.mediator.demo2;
 
 /**
- * The proxy controlling access to the {@link IvoryTower}.
+ * Rogue party member.
  */
-@Slf4j
-public class WizardTowerProxy implements WizardTower {
+public class Rogue extends PartyMemberBase {
 
-    private static final int NUM_WIZARDS_ALLOWED = 3;
+  @Override
+  public String toString() {
+    return "Rogue";
+  }
 
-    private int numWizards;
-
-    private final WizardTower tower;
-
-    public WizardTowerProxy(WizardTower tower) {
-        this.tower = tower;
-    }
-
-    @Override
-    public void enter(Wizard wizard) {
-        if (numWizards < NUM_WIZARDS_ALLOWED) {
-            tower.enter(wizard);
-            numWizards++;
-        } else {
-            LOGGER.info("{} is not allowed to enter!", wizard);
-        }
-    }
 }

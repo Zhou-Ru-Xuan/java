@@ -22,33 +22,54 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.zhouruxuan.structural.proxy.demo2;
+package com.zhouruxuan.behavioral.command.demo3;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Deque;
+import java.util.LinkedList;
+
 /**
- * The proxy controlling access to the {@link IvoryTower}.
+ * Wizard is the invoker of the commands.
  */
 @Slf4j
-public class WizardTowerProxy implements WizardTower {
+public class Wizard {
 
-    private static final int NUM_WIZARDS_ALLOWED = 3;
+  private final Deque<Runnable> undoStack = new LinkedList<>();
+  private final Deque<Runnable> redoStack = new LinkedList<>();
 
-    private int numWizards;
+  /**
+   * Cast spell.
+   */
+  public void castSpell(Runnable runnable) {
+    runnable.run();
+    undoStack.offerLast(runnable);
+  }
 
-    private final WizardTower tower;
-
-    public WizardTowerProxy(WizardTower tower) {
-        this.tower = tower;
+  /**
+   * Undo last spell.
+   */
+  public void undoLastSpell() {
+    if (!undoStack.isEmpty()) {
+      var previousSpell = undoStack.pollLast();
+      redoStack.offerLast(previousSpell);
+      previousSpell.run();
     }
+  }
 
-    @Override
-    public void enter(Wizard wizard) {
-        if (numWizards < NUM_WIZARDS_ALLOWED) {
-            tower.enter(wizard);
-            numWizards++;
-        } else {
-            LOGGER.info("{} is not allowed to enter!", wizard);
-        }
+  /**
+   * Redo last spell.
+   */
+  public void redoLastSpell() {
+    if (!redoStack.isEmpty()) {
+      var previousSpell = redoStack.pollLast();
+      undoStack.offerLast(previousSpell);
+      previousSpell.run();
     }
+  }
+
+  @Override
+  public String toString() {
+    return "Wizard";
+  }
 }

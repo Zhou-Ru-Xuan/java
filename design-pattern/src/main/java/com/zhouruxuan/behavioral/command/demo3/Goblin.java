@@ -22,33 +22,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.zhouruxuan.structural.proxy.demo2;
-
-import lombok.extern.slf4j.Slf4j;
+package com.zhouruxuan.behavioral.command.demo3;
 
 /**
- * The proxy controlling access to the {@link IvoryTower}.
+ * Goblin is the target of the spells.
  */
-@Slf4j
-public class WizardTowerProxy implements WizardTower {
+public class Goblin extends Target {
 
-    private static final int NUM_WIZARDS_ALLOWED = 3;
+  public Goblin() {
+    setSize(Size.NORMAL);
+    setVisibility(Visibility.VISIBLE);
+  }
 
-    private int numWizards;
-
-    private final WizardTower tower;
-
-    public WizardTowerProxy(WizardTower tower) {
-        this.tower = tower;
-    }
-
-    @Override
-    public void enter(Wizard wizard) {
-        if (numWizards < NUM_WIZARDS_ALLOWED) {
-            tower.enter(wizard);
-            numWizards++;
-        } else {
-            LOGGER.info("{} is not allowed to enter!", wizard);
-        }
-    }
+  @Override
+  public String toString() {
+    return "Goblin";
+  }
 }

@@ -22,33 +22,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.zhouruxuan.structural.proxy.demo2;
-
-import lombok.extern.slf4j.Slf4j;
+package com.zhouruxuan.behavioral.chainofresponsibility.demo5;
 
 /**
- * The proxy controlling access to the {@link IvoryTower}.
+ * The Chain of Responsibility pattern is a design pattern consisting of command objects and a
+ * series of processing objects. Each processing object contains logic that defines the types of
+ * command objects that it can handle; the rest are passed to the next processing object in the
+ * chain. A mechanism also exists for adding new processing objects to the end of this chain.
+ *
+ * <p>In this example we organize the request handlers ({@link RequestHandler}) into a chain where
+ * each handler has a chance to act on the request on its turn. Here the king ({@link OrcKing})
+ * makes requests and the military orcs ({@link OrcCommander}, {@link OrcOfficer}, {@link
+ * OrcSoldier}) form the handler chain.
  */
-@Slf4j
-public class WizardTowerProxy implements WizardTower {
+public class App {
 
-    private static final int NUM_WIZARDS_ALLOWED = 3;
+  /**
+   * Program entry point.
+   *
+   * @param args command line args
+   */
+  public static void main(String[] args) {
 
-    private int numWizards;
-
-    private final WizardTower tower;
-
-    public WizardTowerProxy(WizardTower tower) {
-        this.tower = tower;
-    }
-
-    @Override
-    public void enter(Wizard wizard) {
-        if (numWizards < NUM_WIZARDS_ALLOWED) {
-            tower.enter(wizard);
-            numWizards++;
-        } else {
-            LOGGER.info("{} is not allowed to enter!", wizard);
-        }
-    }
+    var king = new OrcKing();
+    king.makeRequest(new Request(RequestType.DEFEND_CASTLE, "defend castle"));
+    king.makeRequest(new Request(RequestType.TORTURE_PRISONER, "torture prisoner"));
+    king.makeRequest(new Request(RequestType.COLLECT_TAX, "collect tax"));
+  }
 }

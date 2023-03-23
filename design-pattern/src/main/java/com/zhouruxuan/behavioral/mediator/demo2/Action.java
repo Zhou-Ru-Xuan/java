@@ -22,33 +22,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.zhouruxuan.structural.proxy.demo2;
-
-import lombok.extern.slf4j.Slf4j;
+package com.zhouruxuan.behavioral.mediator.demo2;
 
 /**
- * The proxy controlling access to the {@link IvoryTower}.
+ * Action enumeration.
  */
-@Slf4j
-public class WizardTowerProxy implements WizardTower {
+public enum Action {
+  HUNT("hunted a rabbit", "arrives for dinner"),
+  TALE("tells a tale", "comes to listen"),
+  GOLD("found gold", "takes his share of the gold"),
+  ENEMY("spotted enemies", "runs for cover"),
+  NONE("", "");
 
-    private static final int NUM_WIZARDS_ALLOWED = 3;
+  private final String title;
+  private final String description;
 
-    private int numWizards;
+  Action(String title, String description) {
+    this.title = title;
+    this.description = description;
+  }
 
-    private final WizardTower tower;
+  public String getDescription() {
+    return description;
+  }
 
-    public WizardTowerProxy(WizardTower tower) {
-        this.tower = tower;
-    }
-
-    @Override
-    public void enter(Wizard wizard) {
-        if (numWizards < NUM_WIZARDS_ALLOWED) {
-            tower.enter(wizard);
-            numWizards++;
-        } else {
-            LOGGER.info("{} is not allowed to enter!", wizard);
-        }
-    }
+  public String toString() {
+    return title;
+  }
 }

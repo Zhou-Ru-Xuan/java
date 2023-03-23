@@ -22,33 +22,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.zhouruxuan.structural.proxy.demo2;
+package com.zhouruxuan.behavioral.chainofresponsibility.demo5;
 
-import lombok.extern.slf4j.Slf4j;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 
 /**
- * The proxy controlling access to the {@link IvoryTower}.
+ * OrcKing makes requests that are handled by the chain.
  */
-@Slf4j
-public class WizardTowerProxy implements WizardTower {
+public class OrcKing {
 
-    private static final int NUM_WIZARDS_ALLOWED = 3;
+  private List<RequestHandler> handlers;
 
-    private int numWizards;
+  public OrcKing() {
+    buildChain();
+  }
 
-    private final WizardTower tower;
+  private void buildChain() {
+    handlers = Arrays.asList(new OrcCommander(), new OrcOfficer(), new OrcSoldier());
+  }
 
-    public WizardTowerProxy(WizardTower tower) {
-        this.tower = tower;
-    }
-
-    @Override
-    public void enter(Wizard wizard) {
-        if (numWizards < NUM_WIZARDS_ALLOWED) {
-            tower.enter(wizard);
-            numWizards++;
-        } else {
-            LOGGER.info("{} is not allowed to enter!", wizard);
-        }
-    }
+  /**
+   * Handle request by the chain.
+   */
+  public void makeRequest(Request req) {
+    handlers
+        .stream()
+        .sorted(Comparator.comparing(RequestHandler::getPriority))
+        .filter(handler -> handler.canHandleRequest(req))
+        .findFirst()
+        .ifPresent(handler -> handler.handle(req));
+  }
 }

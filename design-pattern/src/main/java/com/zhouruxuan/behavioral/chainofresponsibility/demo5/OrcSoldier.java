@@ -22,33 +22,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.zhouruxuan.structural.proxy.demo2;
+package com.zhouruxuan.behavioral.chainofresponsibility.demo5;
 
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * The proxy controlling access to the {@link IvoryTower}.
+ * OrcSoldier.
  */
 @Slf4j
-public class WizardTowerProxy implements WizardTower {
+public class OrcSoldier implements RequestHandler {
+  @Override
+  public boolean canHandleRequest(Request req) {
+    return req.getRequestType() == RequestType.COLLECT_TAX;
+  }
 
-    private static final int NUM_WIZARDS_ALLOWED = 3;
+  @Override
+  public int getPriority() {
+    return 1;
+  }
 
-    private int numWizards;
+  @Override
+  public void handle(Request req) {
+    req.markHandled();
+    LOGGER.info("{} handling request \"{}\"", name(), req);
+  }
 
-    private final WizardTower tower;
-
-    public WizardTowerProxy(WizardTower tower) {
-        this.tower = tower;
-    }
-
-    @Override
-    public void enter(Wizard wizard) {
-        if (numWizards < NUM_WIZARDS_ALLOWED) {
-            tower.enter(wizard);
-            numWizards++;
-        } else {
-            LOGGER.info("{} is not allowed to enter!", wizard);
-        }
-    }
+  @Override
+  public String name() {
+    return "Orc soldier";
+  }
 }

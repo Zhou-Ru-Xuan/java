@@ -22,33 +22,45 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.zhouruxuan.structural.proxy.demo2;
+package com.zhouruxuan.behavioral.command.demo3;
 
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * The proxy controlling access to the {@link IvoryTower}.
+ * Base class for spell targets.
  */
+@Setter
 @Slf4j
-public class WizardTowerProxy implements WizardTower {
+@Getter
+public abstract class Target {
 
-    private static final int NUM_WIZARDS_ALLOWED = 3;
+  private Size size;
 
-    private int numWizards;
+  private Visibility visibility;
 
-    private final WizardTower tower;
+  /**
+   * Print status.
+   */
+  public void printStatus() {
+    LOGGER.info("{}, [size={}] [visibility={}]", this, getSize(), getVisibility());
+  }
 
-    public WizardTowerProxy(WizardTower tower) {
-        this.tower = tower;
-    }
+  /**
+   * Changes the size of the target.
+   */
+  public void changeSize() {
+    var oldSize = getSize() == Size.NORMAL ? Size.SMALL : Size.NORMAL;
+    setSize(oldSize);
+  }
 
-    @Override
-    public void enter(Wizard wizard) {
-        if (numWizards < NUM_WIZARDS_ALLOWED) {
-            tower.enter(wizard);
-            numWizards++;
-        } else {
-            LOGGER.info("{} is not allowed to enter!", wizard);
-        }
-    }
+  /**
+   * Changes the visibility of the target.
+   */
+  public void changeVisibility() {
+    var visible = getVisibility() == Visibility.INVISIBLE
+            ? Visibility.VISIBLE : Visibility.INVISIBLE;
+    setVisibility(visible);
+  }
 }
