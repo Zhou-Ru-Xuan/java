@@ -30,12 +30,10 @@ import lombok.extern.slf4j.Slf4j;
  * Angry state.
  */
 @Slf4j
-public class AngryState implements State {
-
-  private final Mammoth mammoth;
+public class AngryState extends State {
 
   public AngryState(Mammoth mammoth) {
-    this.mammoth = mammoth;
+    super(mammoth);
   }
 
   @Override

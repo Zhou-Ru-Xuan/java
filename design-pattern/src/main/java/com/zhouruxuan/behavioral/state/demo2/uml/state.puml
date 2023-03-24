@@ -51,4 +51,5 @@ class com.zhouruxuan.behavioral.state.demo2.PlayingState {
 com.zhouruxuan.behavioral.state.demo2.State <|-- com.zhouruxuan.behavioral.state.demo2.LockedState
 com.zhouruxuan.behavioral.state.demo2.State <|-- com.zhouruxuan.behavioral.state.demo2.ReadyState
 com.zhouruxuan.behavioral.state.demo2.State <|-- com.zhouruxuan.behavioral.state.demo2.PlayingState
+com.zhouruxuan.behavioral.state.demo2.State -- com.zhouruxuan.behavioral.state.demo2.Player : 依赖
 @enduml

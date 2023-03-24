@@ -30,12 +30,9 @@ import lombok.extern.slf4j.Slf4j;
  * Peaceful state.
  */
 @Slf4j
-public class PeacefulState implements State {
-
-  private final Mammoth mammoth;
-
+public class PeacefulState extends State {
   public PeacefulState(Mammoth mammoth) {
-    this.mammoth = mammoth;
+    super(mammoth);
   }
 
   @Override

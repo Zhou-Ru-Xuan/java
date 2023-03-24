@@ -27,9 +27,14 @@ package com.zhouruxuan.behavioral.state.demo3;
 /**
  * State interface.
  */
-public interface State {
+public abstract class State {
+    public final Mammoth mammoth;
 
-  void onEnterState();
+    protected State(Mammoth mammoth) {
+        this.mammoth = mammoth;
+    }
 
-  void observe();
+    public abstract void onEnterState();
+
+    public abstract void observe();
 }
