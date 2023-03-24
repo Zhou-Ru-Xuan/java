@@ -1,0 +1,25 @@
+@startuml
+class com.zhouruxuan.behavioral.strategy.demo3.MeleeStrategy {
++ void execute()
+}
+class com.zhouruxuan.behavioral.strategy.demo3.SpellStrategy {
++ void execute()
+}
+interface com.zhouruxuan.behavioral.strategy.demo3.DragonSlayingStrategy {
+~ void execute()
+}
+class com.zhouruxuan.behavioral.strategy.demo3.DragonSlayer {
+- DragonSlayingStrategy strategy
++ void changeStrategy(DragonSlayingStrategy)
++ void goToBattle()
+}
+class com.zhouruxuan.behavioral.strategy.demo3.ProjectileStrategy {
++ void execute()
+}
+
+
+com.zhouruxuan.behavioral.strategy.demo3.DragonSlayingStrategy <|.. com.zhouruxuan.behavioral.strategy.demo3.MeleeStrategy
+com.zhouruxuan.behavioral.strategy.demo3.DragonSlayingStrategy <|.. com.zhouruxuan.behavioral.strategy.demo3.SpellStrategy
+com.zhouruxuan.behavioral.strategy.demo3.DragonSlayingStrategy <|.. com.zhouruxuan.behavioral.strategy.demo3.ProjectileStrategy
+com.zhouruxuan.behavioral.strategy.demo3.DragonSlayer --> com.zhouruxuan.behavioral.strategy.demo3.DragonSlayingStrategy
+@enduml
