@@ -1,4 +1,4 @@
-package com.zhouruxuan.structural.bridge.demo2.devices;
+package com.zhouruxuan.structural.bridge.demo2;
 
 public interface Device {
     boolean isEnabled();

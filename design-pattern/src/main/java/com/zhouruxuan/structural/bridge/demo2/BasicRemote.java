@@ -1,6 +1,4 @@
-package com.zhouruxuan.structural.bridge.demo2.remotes;
-
-import com.zhouruxuan.structural.bridge.demo2.devices.Device;
+package com.zhouruxuan.structural.bridge.demo2;
 
 public class BasicRemote implements Remote {
     protected Device device;

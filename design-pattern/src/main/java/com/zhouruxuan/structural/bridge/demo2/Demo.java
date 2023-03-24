@@ -1,11 +1,5 @@
 package com.zhouruxuan.structural.bridge.demo2;
 
-import com.zhouruxuan.structural.bridge.demo2.devices.Device;
-import com.zhouruxuan.structural.bridge.demo2.devices.Radio;
-import com.zhouruxuan.structural.bridge.demo2.devices.Tv;
-import com.zhouruxuan.structural.bridge.demo2.remotes.AdvancedRemote;
-import com.zhouruxuan.structural.bridge.demo2.remotes.BasicRemote;
-
 /**
  * Bridge between devices and remote controls
  * This example shows separation between the classes of remotes and devices that they control.
