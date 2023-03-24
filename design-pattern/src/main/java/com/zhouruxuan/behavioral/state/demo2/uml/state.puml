@@ -1,0 +1,54 @@
+@startuml
+class com.zhouruxuan.behavioral.state.demo2.LockedState {
++ String onLock()
++ String onPlay()
++ String onNext()
++ String onPrevious()
+}
+class com.zhouruxuan.behavioral.state.demo2.UI {
+- Player player
+- {static} JTextField textField
++ void init()
+}
+abstract class com.zhouruxuan.behavioral.state.demo2.State {
+~ Player player
++ {abstract}String onLock()
++ {abstract}String onPlay()
++ {abstract}String onNext()
++ {abstract}String onPrevious()
+}
+class com.zhouruxuan.behavioral.state.demo2.Player {
+- State state
+- boolean playing
+- List<String> playlist
+- int currentTrack
++ void changeState(State)
++ State getState()
++ void setPlaying(boolean)
++ boolean isPlaying()
++ String startPlayback()
++ String nextTrack()
++ String previousTrack()
++ void setCurrentTrackAfterStop()
+}
+class com.zhouruxuan.behavioral.state.demo2.Demo {
++ {static} void main(String[])
+}
+class com.zhouruxuan.behavioral.state.demo2.ReadyState {
++ String onLock()
++ String onPlay()
++ String onNext()
++ String onPrevious()
+}
+class com.zhouruxuan.behavioral.state.demo2.PlayingState {
++ String onLock()
++ String onPlay()
++ String onNext()
++ String onPrevious()
+}
+
+
+com.zhouruxuan.behavioral.state.demo2.State <|-- com.zhouruxuan.behavioral.state.demo2.LockedState
+com.zhouruxuan.behavioral.state.demo2.State <|-- com.zhouruxuan.behavioral.state.demo2.ReadyState
+com.zhouruxuan.behavioral.state.demo2.State <|-- com.zhouruxuan.behavioral.state.demo2.PlayingState
+@enduml

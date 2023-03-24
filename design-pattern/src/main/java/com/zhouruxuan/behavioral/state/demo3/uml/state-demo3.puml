@@ -1,0 +1,30 @@
+@startuml
+interface com.zhouruxuan.behavioral.state.demo3.State {
+~ void onEnterState()
+~ void observe()
+}
+class com.zhouruxuan.behavioral.state.demo3.PeacefulState {
+- Mammoth mammoth
++ void observe()
++ void onEnterState()
+}
+class com.zhouruxuan.behavioral.state.demo3.AngryState {
+- Mammoth mammoth
++ void observe()
++ void onEnterState()
+}
+class com.zhouruxuan.behavioral.state.demo3.Mammoth {
+- State state
++ void timePasses()
+- void changeStateTo(State)
++ String toString()
++ void observe()
+}
+class com.zhouruxuan.behavioral.state.demo3.App {
++ {static} void main(String[])
+}
+
+
+com.zhouruxuan.behavioral.state.demo3.State <|.. com.zhouruxuan.behavioral.state.demo3.PeacefulState
+com.zhouruxuan.behavioral.state.demo3.State <|.. com.zhouruxuan.behavioral.state.demo3.AngryState
+@enduml
