@@ -24,8 +24,7 @@
  */
 package com.zhouruxuan.creational.abstractfactory.demo3;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 /**
  * Helper class to manufacture {@link KingdomFactory} beans. 

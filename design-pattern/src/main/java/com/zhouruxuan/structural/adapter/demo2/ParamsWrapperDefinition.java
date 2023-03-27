@@ -1,7 +1,6 @@
 package com.zhouruxuan.structural.adapter.demo2;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 /**
  * @author zhouruxuan
