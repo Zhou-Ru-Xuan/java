@@ -8,8 +8,7 @@ import lombok.Setter;
  * @description
  * @date 2023-03-16
  **/
-@Getter
-@Setter
+@Data
 public class ParamsWrapperDefinition {
     private int paramA;
     private int paramB;

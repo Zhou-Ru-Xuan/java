@@ -30,8 +30,7 @@ import lombok.Setter;
 /**
  * Helper class to manufacture {@link KingdomFactory} beans. 
  */
-@Getter
-@Setter
+@Data
 public class Kingdom {
 
   private King king;
