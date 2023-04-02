@@ -17,31 +17,6 @@ import java.util.stream.IntStream;
 public class StreamTest {
     @Test
     public void test1() {
-        List<Integer> list = List.of(1, 2, 3);
-
-        List<Integer> filterList = new ArrayList<>();
-
-        for (Integer i : list) {
-            if (i > 2) {
-                filterList.add(i);
-            }
-        }
-
-        System.out.println(filterList);
-
-        List<Integer> list2 = List.of(1, 2, 3);
-
-        List<Integer> filterList2 = new ArrayList<>();
-
-        for (Integer i : list2) {
-            if (i > 2 && i < 10 && (i % 2 == 0)) {
-                filterList2.add(i);
-            }
-        }
-
-        System.out.println(filterList2);
-
-
     }
 
     @Test
@@ -91,5 +66,27 @@ public class StreamTest {
         System.out.println(Runtime.getRuntime().availableProcessors());// 输出 4
         // parallelStream默认的并发线程数
         System.out.println(ForkJoinPool.getCommonPoolParallelism());// 输出 3
+
+
+        List<Integer> values = new ArrayList<>();
+        IntStream.range(1, 10000).parallel().forEach(values::add);
+        System.out.println(values.size());
+
+        ArrayList<Object> arrayList = new ArrayList();
+        List<Object> collect = arrayList.stream().parallel().collect(Collectors.toList());
+    }
+
+    @Test
+    public void parallelStreamTest2() throws ExecutionException, InterruptedException {
+        List<Object> list = Arrays.asList(new Object(),new Object(),new Object());
+        Set<Thread> threadSet = new HashSet<>();
+        //开始并行执行
+        list.stream().parallel().forEach(i -> {
+            Thread thread = Thread.currentThread();
+            System.err.println("integer：" + i + "，" + "currentThread:" + thread.getName());
+            threadSet.add(thread);
+        });
+        System.out.println("all threads：" + Joiner.on("，").join(threadSet.stream().map(Thread::getName).collect(Collectors.toList())));
+
     }
 }

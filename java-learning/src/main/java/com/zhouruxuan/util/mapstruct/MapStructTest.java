@@ -49,9 +49,9 @@ public class MapStructTest {
 
     @Test
     public void test3() {
-        String attributes =
-                """
-                        {"id":2,"name":"测试123"}""";
+        String attributes = "{\"id\":2,\"name\":\"测试123\"}";
+
+
         UserPo userPo = UserPo.builder()
                 .id(1L)
                 .gmtCreate(new Date())
@@ -98,7 +98,7 @@ public class MapStructTest {
     }
 
     @Test
-    public void test5(){
+    public void test5() {
 
     }
 
