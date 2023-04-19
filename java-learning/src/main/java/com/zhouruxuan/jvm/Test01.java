@@ -26,19 +26,34 @@ public class Test01 {
     }
 
     @Test
-    public void test02(){
+    public void test02() {
         System.out.println(NaN);
         try {
             throw new RuntimeException();
-        }catch (RuntimeException e){
+        } catch (RuntimeException e) {
             System.out.println(e.getMessage());
         }
     }
 
     @Test
-    public void test03(){
+    public void test03() {
         char c1 = 'D';
         char c2 = 5;
         char c3 = (char) (c1 + c2);
+    }
+
+    @Test
+    public void test04() {
+        nlp();
+    }
+
+    public static void nlp() {
+        int sum = 0;
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < 20000000; i++) {
+            sum += i;
+        }
+        long end = System.currentTimeMillis();
+        System.out.println("cost:" + (end - start) + " ms");
     }
 }
