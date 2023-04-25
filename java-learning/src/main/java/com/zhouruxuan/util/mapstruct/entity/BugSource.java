@@ -18,4 +18,6 @@ public class BugSource {
     int bid;
 
     int cId;
+
+    BugSource bugSource;
 }

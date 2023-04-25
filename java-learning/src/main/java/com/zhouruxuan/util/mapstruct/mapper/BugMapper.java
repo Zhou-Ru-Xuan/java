@@ -16,6 +16,7 @@ public interface BugMapper {
     BugMapper INSTANCE = Mappers.getMapper(BugMapper.class);
 
     @Mapping(target = "cid", source = "CId")
-    @Mapping(target = "bId", source = "bid")
+    //@Mapping(target = "bId", source = "bid")
+    @Mapping(target = "bId",source = "bugSource.bugSource.bid")
     BugTarget gmapB(BugSource bugSource);
 }
