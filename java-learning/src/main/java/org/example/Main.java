@@ -1,7 +1,7 @@
 package org.example;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
@@ -18,9 +18,19 @@ public class Main {
         //});
         //System.out.println(longStringHashMap);
 
-        String[] array = {"1", "2", "3", "4", "5"};
-        List<String> list = Arrays.asList(array);
-        list.add("6");
+        //String[] array = {"1", "2", "3", "4", "5"};
+        //List<String> list = Arrays.asList(array);
+        //list.add("6");
+
+
+        Map<String, Object> map = new HashMap<>();
+        Long id = 100L;
+        map.put("id", id);
+        map.put("test",new Test());
+        System.out.println(map.get("test"));
+
+        Object id1 = map.get("id");
+        System.out.println(id1);
     }
 
 
