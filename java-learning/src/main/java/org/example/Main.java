@@ -1,37 +1,42 @@
 package org.example;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.alibaba.fastjson.JSON;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.TypeAdapter;
+
+import java.io.IOException;
+
+import static org.junit.Assert.assertTrue;
 
 public class Main {
     public static void main(String[] args) {
-        //System.out.println(System.getProperty("user.dir"));
-        //
-        //System.out.println("Hello world!");
-        //
-        //List<Long> longs = Arrays.asList(321321L);
-        //HashMap<Long, String> longStringHashMap = new HashMap<>();
-        //longs.forEach(l -> {
-        //    if (!longStringHashMap.containsKey(l)) {
-        //        longStringHashMap.put(l, "321");
-        //    }
-        //});
-        //System.out.println(longStringHashMap);
+//        String json = "123";
+//        String json2 = "Invalid_Json";
+//        String json3 = "{}";
+//        String json4 = "{\"a\":123}";
+//
+////        assertTrue(isValid2(json));
+////        assertTrue(isValid2(json2));
+//
+//        assertTrue(isValid2(json3));
+//
+//        assertTrue(isValid2(json4));
+        String obj = "[{\"commander\":\"zhouruxuan\",\"configData\":\"{\"0\":\"123\",\"123\":\"321\"}\",\"configName\":\"PR\",\"configType\":0,\"dataType\":7,\"gmtCreate\":\"2023-07-06T11:51:17\",\"gmtModified\":\"2023-07-12T11:48:02\",\"remark\":\"价格审核中 加审审批 分战区指定审核人 0为兜底审核人\",\"status\":1,\"usedAppkey\":\"com.sankuai.hotel.biz.platform\",\"validBegin\":\"2023-07-06T11:50:18\",\"validEnd\":\"2033-07-06T11:50:43\"}]";
+        assertTrue(isValid2("[{},{}]"));
+        JSON.parseArray("[{},{}]");
 
-        //String[] array = {"1", "2", "3", "4", "5"};
-        //List<String> list = Arrays.asList(array);
-        //list.add("6");
-
-
-        Map<String, Object> map = new HashMap<>();
-        Long id = 100L;
-        map.put("id", id);
-        map.put("test",new Test());
-        System.out.println(map.get("test"));
-
-        Object id1 = map.get("id");
-        System.out.println(id1);
     }
 
+    static final TypeAdapter<JsonElement> strictAdapter = new Gson().getAdapter(JsonElement.class);
 
+    public static boolean isValid2(String json) {
+        try {
+            JsonElement jsonElement = strictAdapter.fromJson(json);
+            return jsonElement.isJsonObject() || jsonElement.isJsonArray();
+        } catch (JsonSyntaxException | IOException e) {
+            return false;
+        }
+    }
 }
