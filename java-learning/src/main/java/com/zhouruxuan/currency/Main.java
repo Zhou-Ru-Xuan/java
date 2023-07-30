@@ -2,21 +2,14 @@ package com.zhouruxuan.currency;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println(calc(1,2,'+'));
-    }
+        int sum = 0;
+        long start = System.currentTimeMillis();
+        for (int i = 0; i < 1000000000L; i++) {
+            sum++;
+        }
+        long end = System.currentTimeMillis();
 
-    static int calc(int a, int b, char op) {
-        int c = 0;
-        if (op == '+')
-            c = a + b;
-        else if (op == '-')
-            c = a - b;
-        else if (op == '*')
-            c = a * b;
-        else if (op == '/')
-            c = a / b;
-        else
-            System.out.println("invalid operation");
-        return c;
+        System.out.println(sum);
+        System.out.println(end - start);
     }
 }
