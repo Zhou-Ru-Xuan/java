@@ -1,7 +1,8 @@
 package com.zhouruxuan.spring;
 
-import com.zhouruxuan.spring.transaction.MyService;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import com.zhouruxuan.spring.bean.Person;
+
+import javax.annotation.Resource;
 
 /**
  * @author zhouruxuan
@@ -10,11 +11,11 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  **/
 public class Main {
 
-    private MyService myService = new MyService();
+    @Resource
+    public Person person;
 
     public static void main(String[] args) {
-        ClassPathXmlApplicationContext classPathXmlApplicationContext = new ClassPathXmlApplicationContext("");
-        Object bean = classPathXmlApplicationContext.getBean("");
-
+        Main main = new Main();
+        System.out.println(main.person);
     }
 }
