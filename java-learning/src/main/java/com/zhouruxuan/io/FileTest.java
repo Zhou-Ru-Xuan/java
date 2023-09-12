@@ -1,11 +1,15 @@
 package com.zhouruxuan.io;
 
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import static com.zhouruxuan.io.Constant.AbsolutePath;
+import static com.zhouruxuan.io.Constant.RelativePathInTest;
 
 /**
  * @author zhouruxuan
@@ -13,10 +17,6 @@ import java.io.IOException;
  * @date 2023-03-20
  **/
 public class FileTest {
-    private static final String AbsolutePath = "/Users/zhouruxuan/Documents/code/idea/java/java-learning/src/main/java/com/zhouruxuan/io";
-
-    private static final String RelativePath = "src/main/java/com/zhouruxuan/io";
-
     @Test
     public void test1() {
         System.out.println(System.getProperty("user.dir"));
@@ -38,14 +38,14 @@ public class FileTest {
 
     @Test
     public void test2() throws FileNotFoundException {
-        File file = new File(RelativePath + "/4.txt");
+        File file = new File(RelativePathInTest + "/4.txt");
         FileOutputStream fos = new FileOutputStream(file);
     }
 
     @Test
     public void test3() throws FileNotFoundException {
         //java.io.FileNotFoundException: src/main/java/com/zhouruxuan/io/dir1/5.txt (No such file or directory)。因为没有dir1
-        File file = new File(RelativePath + "/dir1/5.txt");
+        File file = new File(RelativePathInTest + "/dir1/5.txt");
         FileOutputStream fos = new FileOutputStream(file);
     }
 
