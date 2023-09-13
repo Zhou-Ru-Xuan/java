@@ -89,4 +89,17 @@ public class StreamTest {
         System.out.println("all threads：" + Joiner.on("，").join(threadSet.stream().map(Thread::getName).collect(Collectors.toList())));
 
     }
+
+    @Test
+    public void testDistinct(){
+        ArrayList<Object> objects = new ArrayList<>();
+        Object o = new Object();
+        Object o2 = new Object();
+        objects.add(o);
+        objects.add(o);
+        objects.add(o2);
+        objects.add(null);
+        List<Object> collect = objects.stream().distinct().collect(Collectors.toList());
+        System.out.println(collect);
+    }
 }
