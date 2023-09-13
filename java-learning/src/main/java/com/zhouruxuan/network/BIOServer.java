@@ -8,33 +8,28 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class BIOServer {
+    private static final int PORT = 8888;
+    private static final ExecutorService executorService = Executors.newCachedThreadPool();
 
     public static void main(String[] args) throws IOException {
-        // 创建线程池
-        ExecutorService executorService = Executors.newCachedThreadPool();
-        // 创建serverSocket
-        ServerSocket serverSocket = new ServerSocket(8888);
-        System.out.println("服务端已启动，端口号为8888...");
-        while (true) {
-            System.out.println("线程的信息 id=" + Thread.currentThread().getId() + " 名称=" + Thread.currentThread().getName());
-            System.out.println("等待连接...");
-            // 监听
-            final Socket accept = serverSocket.accept();
-            System.out.println("有一个客户端连接...");
-            executorService.execute(new Runnable() {
-                @Override
-                public void run() {
-                    handler(accept);
-                }
-            });
+        try (ServerSocket serverSocket = new ServerSocket(PORT)) {
+            System.out.println("服务端已启动，端口号为" + PORT + "...");
+            while (true) {
+                acceptClient(serverSocket);
+            }
         }
     }
 
+    private static void acceptClient(ServerSocket serverSocket) throws IOException {
+        System.out.println("等待连接...");
+        final Socket clientSocket = serverSocket.accept();
+        System.out.println("有一个客户端连接...");
+        executorService.execute(() -> handler(clientSocket));
+    }
+
     public static void handler(Socket socket) {
-        try {
+        try (InputStream inputStream = socket.getInputStream()) {
             byte[] bytes = new byte[1024];
-            // 获取输入流
-            InputStream inputStream = socket.getInputStream();
             while (true) {
                 System.out.println("线程的信息 id=" + Thread.currentThread().getId() + " 名称=" + Thread.currentThread().getName());
                 System.out.println("read...");
@@ -48,13 +43,8 @@ public class BIOServer {
             }
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            try {
-                socket.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
+
 
 }
