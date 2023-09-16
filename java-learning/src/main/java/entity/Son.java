@@ -1,4 +1,4 @@
-package com.zhouruxuan.objectorientation.entity;
+package entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +9,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Son extends Father {
+public class Son extends entity.entity.Father {
     private Long schoolId;
 }

@@ -1,6 +1,6 @@
 package com.zhouruxuan.generic;
 
-import com.zhouruxuan.generic.entity.*;
+import entity.*;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -89,5 +89,12 @@ public class DemoTest {
 
     }
 
-
+    @Test
+    public void testBridge() {
+        // Node<Object> node = new Node<>(5);
+        // node.setData("hello");
+        MyNode mn = new MyNode(5);
+        Node n = mn;            // A raw type - compiler throws an unchecked warning
+        n.setData("Hello");     // Causes a ClassCastException to be thrown.
+    }
 }

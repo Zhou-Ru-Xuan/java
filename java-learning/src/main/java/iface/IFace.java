@@ -1,4 +1,4 @@
-package com.zhouruxuan.objectorientation.iface;
+package iface;
 
 /**
  * @author zhouruxuan

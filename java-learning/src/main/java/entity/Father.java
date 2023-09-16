@@ -1,4 +1,4 @@
-package com.zhouruxuan.objectorientation.entity;
+package entity.entity;
 
 import lombok.*;
 

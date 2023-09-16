@@ -1,4 +1,4 @@
-package com.zhouruxuan.generic.entity;
+package entity;
 
 public class NaturalNumber {
 

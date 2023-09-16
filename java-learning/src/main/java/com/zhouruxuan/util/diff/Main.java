@@ -1,7 +1,7 @@
 package com.zhouruxuan.util.diff;
 
 import com.alibaba.fastjson.JSON;
-import com.zhouruxuan.objectorientation.entity.Son;
+import entity.Son;
 
 public class Main {
     public static void main(String[] args) throws Exception {
