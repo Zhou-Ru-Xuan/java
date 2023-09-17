@@ -9,6 +9,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Son extends entity.entity.Father {
+public class Son extends entity.Father {
     private Long schoolId;
 }
