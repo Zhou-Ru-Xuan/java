@@ -21,7 +21,6 @@ public class NewThreadTest {
     public void extendsTest() {
         new A().start();
         new A().run();
-
     }
 
     static class B implements Runnable {

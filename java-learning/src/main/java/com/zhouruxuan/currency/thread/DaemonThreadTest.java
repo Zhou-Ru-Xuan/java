@@ -7,7 +7,7 @@ import org.junit.Test;
  * @description
  * @date 2023-03-26
  **/
-public class Test01 {
+public class DaemonThreadTest {
     @Test
     public void test1() {
         Thread userThread = new Thread(() -> {
