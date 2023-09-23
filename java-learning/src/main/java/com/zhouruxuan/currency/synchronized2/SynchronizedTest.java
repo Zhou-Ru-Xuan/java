@@ -1,4 +1,4 @@
-package com.zhouruxuan.currency;
+package com.zhouruxuan.currency.synchronized2;
 
 import org.junit.jupiter.api.Test;
 
