@@ -8,6 +8,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ForkJoinPool;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 /**
  * @author zhouruxuan
@@ -16,7 +17,41 @@ import java.util.stream.IntStream;
  **/
 public class StreamTest {
     @Test
-    public void test1() {
+    public void testForEach() {
+        // 使用Stream.forEach()迭代
+        Stream<String> stream = Stream.of("I", "love", "you", "too");
+        stream.forEach(str -> System.out.print(str));
+    }
+
+    @Test
+    public void testFilter() {
+        // 保留长度等于3的字符串
+        Stream<String> stream = Stream.of("I", "love", "you", "too");
+        stream.filter(str -> str.length() == 3).forEach(str -> System.out.print(str));
+    }
+
+    @Test
+    public void testMap() {
+        Stream<String> stream = Stream.of("I", "love", "you", "too");
+        stream.map(str -> str.toUpperCase()).forEach(str -> System.out.print(str));
+    }
+
+    @Test
+    public void testFlatMap() {
+        Stream<List<Integer>> stream = Stream.of(Arrays.asList(1, 2), Arrays.asList(3, 4, 5));
+        stream.flatMap(list -> list.stream()).forEach(i -> System.out.print(i));
+    }
+
+    @Test
+    public void testLimit() {
+        Stream<Integer> stream = Stream.of(1, 2, 3, 4);
+        stream.limit(2).forEach(i -> System.out.print(i));//12
+    }
+
+    @Test
+    public void testPeek() {
+        Stream<Integer> stream = Stream.of(1, 2, 3, 4);
+        stream.peek(System.out::print).collect(Collectors.toList());
     }
 
     @Test
@@ -78,7 +113,7 @@ public class StreamTest {
 
     @Test
     public void parallelStreamTest2() throws ExecutionException, InterruptedException {
-        List<Object> list = Arrays.asList(new Object(),new Object(),new Object());
+        List<Object> list = Arrays.asList(new Object(), new Object(), new Object());
         Set<Thread> threadSet = new HashSet<>();
         //开始并行执行
         list.stream().parallel().forEach(i -> {
@@ -91,7 +126,7 @@ public class StreamTest {
     }
 
     @Test
-    public void testDistinct(){
+    public void testDistinct() {
         ArrayList<Object> objects = new ArrayList<>();
         Object o = new Object();
         Object o2 = new Object();
