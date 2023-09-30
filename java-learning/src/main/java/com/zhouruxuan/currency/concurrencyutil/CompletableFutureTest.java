@@ -240,6 +240,32 @@ public class CompletableFutureTest {
     }
 
     /**
+     * 1. 和栈的性质一样，越晚添加的编排逻辑越早被执行
+     * 2. 基于同一个对象衍生出来的流程节点的源任务是一致的
+     */
+    @Test
+    public void test06() {
+
+        CompletableFuture<String> A = new CompletableFuture<>();
+        CompletableFuture<String> B = A.thenApply(a -> {
+            System.out.println("B");
+            return "B";
+        });
+        CompletableFuture<String> C = A.thenApply(a -> {
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            System.out.println("C");
+            return "C";
+        });
+
+        A.complete("finish"); //输出结果
+
+    }
+
+    /**
      * exceptionally只能拿到异常。拥有返回值
      *
      * @throws ExecutionException
