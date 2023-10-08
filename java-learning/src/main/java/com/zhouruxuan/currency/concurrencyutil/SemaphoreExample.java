@@ -1,4 +1,4 @@
-package com.zhouruxuan.currency;
+package com.zhouruxuan.currency.concurrencyutil;
 
 import java.util.concurrent.Semaphore;
 

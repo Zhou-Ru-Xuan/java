@@ -1,4 +1,4 @@
-package com.zhouruxuan.currency;
+package com.zhouruxuan.currency.concurrencyutil;
 
 import org.junit.Test;
 
