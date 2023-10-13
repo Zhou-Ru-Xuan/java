@@ -1,6 +1,7 @@
 package com.zhouruxuan.util.guava;
 
 import com.google.common.util.concurrent.RateLimiter;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.TimeUnit;
@@ -109,6 +110,21 @@ public class RateLimiterTest {
              * get 1 tokens: 0.497522s
              */
         }
+    }
+
+    @Test
+    public void givenLimitedResource_whenTryAcquire_shouldNotBlockIndefinitely() {
+        // given
+        RateLimiter rateLimiter = RateLimiter.create(1);
+
+        // when
+        rateLimiter.acquire();
+        boolean result = rateLimiter.tryAcquire(2, 10, TimeUnit.MILLISECONDS);
+        boolean result2 = rateLimiter.tryAcquire(2, 10, TimeUnit.SECONDS);
+
+        // then
+        Assertions.assertFalse(result);
+        Assertions.assertTrue(result2);
     }
 
 }
