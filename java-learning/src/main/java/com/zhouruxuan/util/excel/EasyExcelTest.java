@@ -11,11 +11,11 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.List;
 
-public class EasyExcel {
+public class EasyExcelTest {
     String filePath = "/Users/zhouruxuan/Documents/code/java/java/java-learning/src/main/java/com/zhouruxuan/util/excel/resource/上传绑定礼包与房型码RP码测试.csv";
     InputStream inputStream = new FileInputStream(filePath);
 
-    public EasyExcel() throws FileNotFoundException {
+    public EasyExcelTest() throws FileNotFoundException {
     }
 
     @Test
