@@ -38,10 +38,28 @@
         <gson.version>2.10.1</gson.version>
         <jsonassert.verson>1.5.1</jsonassert.verson>
         <junit.version>4.13.2</junit.version>
+        <opencsv.version>4.6</opencsv.version>
+        <commons-io.version>2.15.0</commons-io.version>
+        <easyexcel.version>3.3.2</easyexcel.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>easyexcel</artifactId>
+                <version>${easyexcel.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.opencsv</groupId>
+                <artifactId>opencsv</artifactId>
+                <version>${opencsv.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.skyscreamer</groupId>
                 <artifactId>jsonassert</artifactId>
