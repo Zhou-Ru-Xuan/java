@@ -137,4 +137,42 @@ public class StreamTest {
         List<Object> collect = objects.stream().distinct().collect(Collectors.toList());
         System.out.println(collect);
     }
+
+    @Test
+    public void testPartitionBy() {
+        List<Long> goodsIds = Arrays.asList(1L, 2L, 3L, 2L, 4L, 3L, 5L, 6L, 7L, 8L, 9L, 10L);
+
+        int batchSize = 2;
+        List<List<Long>> collect = goodsIds.stream()
+                .distinct()
+                .collect(Collectors.partitioningBy(i -> batchSize < goodsIds.size() / batchSize))
+                .values()
+                .stream()
+                .map(list -> list.stream().collect(Collectors.toList()))
+                .collect(Collectors.toList());
+
+        for (List<Long> longs : collect) {
+            System.out.println(longs);
+        }
+    }
+
+    @Test
+    public void testGroupBy(){
+        List<Long> goodsIds = Arrays.asList(1L, 2L, 3L, 2L, 4L, 3L, 5L, 6L, 7L, 8L, 9L, 10L);
+        // 假设goodsIds有1000个元素
+
+        // 过滤掉重复元素
+        List<Long> distinctGoodsIds = goodsIds.stream()
+                .distinct()
+                .collect(Collectors.toList());
+
+        // 按照每500个元素一批进行分组
+        Map<Integer, List<Long>> batches = distinctGoodsIds.stream()
+                .collect(Collectors.groupingBy(i -> (distinctGoodsIds.indexOf(i) / 2) + 1));
+
+        // 输出分组结果
+        batches.forEach((batchNumber, batch) -> {
+            System.out.println("Batch " + batchNumber + ": " + batch);
+        });
+    }
 }
