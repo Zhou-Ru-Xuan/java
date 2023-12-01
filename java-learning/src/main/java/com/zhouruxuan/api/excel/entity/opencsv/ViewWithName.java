@@ -5,32 +5,22 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-/**
- * 跨vpoi关联礼包和商品
- */
 @Getter
 @Setter
 @ToString
 public class ViewWithName {
-    @CsvBindByName(column = "partnerID")
-    private Long partnerId;
+    @CsvBindByName(column = "A")
+    private Long a;
 
-    @CsvBindByName(column = "poiID")
-    private Long poiId;
+    @CsvBindByName(column = "B")
+    private Long b;
 
-    @CsvBindByName(column = "礼包ID")
-    private Long giftId;
+    @CsvBindByName(column = "C")
+    private Long c;
 
-    // 房型码+RP码 与 goodsID两者只存在一种，这里为了复用类，就不设置position了
-    @CsvBindByName(column = "房型码")
-    private String roomTypeCode;
+    @CsvBindByName(column = "D")
+    private String d;
 
-    @CsvBindByName(column = "RP码")
-    private String ratePlanCode;
-
-    @CsvBindByName(column = "goodsID")
-    private Long goodsId;
-
-    @CsvBindByName(column = "原因")
-    private String reason;
+    @CsvBindByName(column = "E")
+    private String e;
 }

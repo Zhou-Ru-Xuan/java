@@ -1,21 +1,21 @@
 package com.zhouruxuan.api.excel;
 
+import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.EasyExcelFactory;
+import com.alibaba.excel.ExcelWriter;
+import com.alibaba.excel.write.metadata.WriteSheet;
 import com.zhouruxuan.api.excel.entity.easyexcel.ViewWithBoth;
 import com.zhouruxuan.api.excel.entity.easyexcel.ViewWithName;
 import com.zhouruxuan.api.excel.entity.easyexcel.ViewWithPosition;
 import org.junit.jupiter.api.Test;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.List;
 
 public class EasyExcelTest {
-    String filePath = "/Users/zhouruxuan/Documents/code/java/java/java-learning/src/main/java/com/zhouruxuan/util/excel/resource/上传绑定礼包与房型码RP码测试.csv";
-    InputStream inputStream = new FileInputStream(filePath);
+    InputStream inputStream = getClass().getResourceAsStream("/excel/ACE.csv");
 
-    public EasyExcelTest() throws FileNotFoundException {
+    public EasyExcelTest() {
     }
 
     @Test
@@ -65,4 +65,30 @@ public class EasyExcelTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    public void write() {
+        try {
+            List<ViewWithName> views = EasyExcelFactory.read(inputStream)
+                    .head(ViewWithName.class)
+                    .sheet()
+                    .doReadSync();
+
+
+            // 创建ExcelWriter对象
+            ExcelWriter excelWriter = EasyExcel.write("easyExcel-write.csv").build();
+
+            // 创建Sheet对象，指定写入的sheet名称
+            WriteSheet writeSheet = EasyExcel.writerSheet("Sheet1").head(ViewWithName.class).build();
+
+            // 写入数据
+            excelWriter.write(views, writeSheet);
+
+            // 关闭ExcelWriter对象，释放资源
+            excelWriter.finish();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

@@ -15,17 +15,40 @@ import org.junit.jupiter.api.Test;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 public class OpenCsvTest {
-    String filePath = "/Users/zhouruxuan/Documents/code/java/java/java-learning/src/main/java/com/zhouruxuan/util/excel/resource/上传绑定礼包与房型码RP码测试.csv";
+    InputStream inputStream = getClass().getResourceAsStream("/excel/ACE.csv");
 
+    /**
+     * 通过英文名称映射（不设置bom）
+     */
+    @Test
+    public void testWithNameNoBom() {
+        try {
+            InputStreamReader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
+
+            List<ViewWithName> views = new CsvToBeanBuilder<ViewWithName>(reader)
+                    .withType(ViewWithName.class)
+                    .build()
+                    .parse();
+
+            for (ViewWithName view : views) {
+                System.out.println(view);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * 通过名称映射（设置bom）
+     */
     @Test
     public void testWithName() {
         try {
-            InputStream inputStream = Files.newInputStream(Paths.get(filePath));
             InputStreamReader reader = new InputStreamReader(BOMInputStream.builder().setInputStream(inputStream).get(), StandardCharsets.UTF_8);
 
             List<ViewWithName> views = new CsvToBeanBuilder<ViewWithName>(reader)
@@ -41,10 +64,33 @@ public class OpenCsvTest {
         }
     }
 
+    /**
+     * 通过列的下标映射，不跳过第一行
+     */
+    @Test
+    public void testWithPositionNoSkipLine() {
+        try {
+            InputStreamReader reader = new InputStreamReader(BOMInputStream.builder().setInputStream(inputStream).get(), StandardCharsets.UTF_8);
+
+            List<ViewWithPosition> views = new CsvToBeanBuilder<ViewWithPosition>(reader)
+                    .withType(ViewWithPosition.class)
+                    .build()
+                    .parse();
+
+            for (ViewWithPosition view : views) {
+                System.out.println(view);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 通过列的下标映射（跳过第一行）
+     */
     @Test
     public void testWithPosition() {
         try {
-            InputStream inputStream = Files.newInputStream(Paths.get(filePath));
             InputStreamReader reader = new InputStreamReader(BOMInputStream.builder().setInputStream(inputStream).get(), StandardCharsets.UTF_8);
 
             List<ViewWithPosition> views = new CsvToBeanBuilder<ViewWithPosition>(reader)
@@ -61,10 +107,30 @@ public class OpenCsvTest {
         }
     }
 
+    /**
+     * 同时使用两个注解（不跳过第一行）
+     */
+    @Test
+    public void testWithBothNoSkipLine() {
+        try {
+            InputStreamReader reader = new InputStreamReader(BOMInputStream.builder().setInputStream(inputStream).get(), StandardCharsets.UTF_8);
+
+            List<ViewWithBoth> views = new CsvToBeanBuilder<ViewWithBoth>(reader)
+                    .withType(ViewWithBoth.class)
+                    .build()
+                    .parse();
+
+            for (ViewWithBoth view : views) {
+                System.out.println(view);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Test
     public void testWithBoth() {
         try {
-            InputStream inputStream = Files.newInputStream(Paths.get(filePath));
             InputStreamReader reader = new InputStreamReader(BOMInputStream.builder().setInputStream(inputStream).get(), StandardCharsets.UTF_8);
 
             List<ViewWithBoth> views = new CsvToBeanBuilder<ViewWithBoth>(reader)
@@ -84,11 +150,11 @@ public class OpenCsvTest {
     @Test
     public void createCsvFileByColumnName() throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
         ViewWithName viewWithName = new ViewWithName();
-        viewWithName.setPartnerId(1234L);
-        viewWithName.setPoiId(2234L);
+        viewWithName.setA(1234L);
+        viewWithName.setB(2234L);
         List<ViewWithName> viewWithNames = new ArrayList<>();
         viewWithNames.add(viewWithName);
-        createCsvFileByColumnName("1234.csv", viewWithNames);
+        createCsvFileByColumnName("write-1234.csv", viewWithNames);
     }
 
     public void createCsvFileByColumnName(String fileName, List<ViewWithName> dataList) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {

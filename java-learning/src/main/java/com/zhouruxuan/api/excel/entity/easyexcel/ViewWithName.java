@@ -5,32 +5,22 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-/**
- * 跨vpoi关联礼包和商品
- */
 @Getter
 @Setter
 @ToString
 public class ViewWithName {
-    @ExcelProperty("partnerID")
-    private Long partnerId;
+    @ExcelProperty("A")
+    private Long a;
 
-    @ExcelProperty("poiID")
-    private Long poiId;
+    @ExcelProperty("B")
+    private Long b;
 
-    @ExcelProperty("礼包ID")
-    private Long giftId;
+    @ExcelProperty("C")
+    private Long c;
 
-    // 房型码+RP码 与 goodsID两者只存在一种，这里为了复用类，就不设置position了
-    @ExcelProperty("房型码")
-    private String roomTypeCode;
+    @ExcelProperty("D")
+    private String d;
 
-    @ExcelProperty("RP码")
-    private String ratePlanCode;
-
-    @ExcelProperty("goodsID")
-    private Long goodsId;
-
-    @ExcelProperty("原因")
-    private String reason;
+    @ExcelProperty("E")
+    private String e;
 }
