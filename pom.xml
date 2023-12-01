@@ -42,10 +42,16 @@
         <commons-io.version>2.15.0</commons-io.version>
         <easyexcel.version>3.3.2</easyexcel.version>
         <validation-api.version>2.0.1.Final</validation-api.version>
+        <hibernate-validator.version>8.0.1.Final</hibernate-validator.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.hibernate.validator</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>${hibernate-validator.version}</version>
+            </dependency>
             <dependency>
                 <groupId>javax.validation</groupId>
                 <artifactId>validation-api</artifactId>
