@@ -9,7 +9,7 @@ import java.util.Objects;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Good {
+public class Goods {
     Long goodsId;
     String goodsName;
 
@@ -17,7 +17,7 @@ public class Good {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Good good = (Good) o;
+        Goods good = (Goods) o;
         return Objects.equals(goodsId, good.goodsId);
     }
 

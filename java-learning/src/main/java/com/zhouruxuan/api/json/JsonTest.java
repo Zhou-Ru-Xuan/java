@@ -53,12 +53,12 @@ public class JsonTest {
                         null),
                         new ArrayList<>());
                 JSONArray goodsList1 = mtaDealingPrepayGoodsResult1.getJSONArray("goodsList");
-                List<Good> goodsList = new ArrayList<>();
+                List<Goods> goodsList = new ArrayList<>();
 
                 for (Object o : goodsList1) {
                     JSONObject o1 = (JSONObject) o;
                     // goodsList.add(new Good(o1.getLong("goodsId"), o1.getString("goodsName")));
-                    goodsList.add(new Good(o1.getLong("goodsId"), null));
+                    goodsList.add(new Goods(o1.getLong("goodsId"), null));
                 }
 
                 logicRoom.getGoodsList().addAll(goodsList);
@@ -90,10 +90,10 @@ public class JsonTest {
                 RoomType roomType = new RoomType(roomId);
                 logicRoom.setRoomType(roomType);
 
-                List<Good> goods = new ArrayList<>();
+                List<Goods> goods = new ArrayList<>();
 
                 for (Long goodsId : goodsList) {
-                    Good good = new Good();
+                    Goods good = new Goods();
                     good.setGoodsId(goodsId);
                     goods.add(good);
                 }

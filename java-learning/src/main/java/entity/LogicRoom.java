@@ -13,6 +13,6 @@ import java.util.List;
 @EqualsAndHashCode
 public class LogicRoom {
     RoomType roomType;
-    List<Good> goodsList;
+    List<Goods> goodsList;
 
 }
