@@ -1,15 +1,13 @@
 package com.zhouruxuan.api.excel;
 
-import com.opencsv.bean.CsvToBeanBuilder;
-import com.opencsv.bean.HeaderColumnNameMappingStrategy;
-import com.opencsv.bean.StatefulBeanToCsv;
-import com.opencsv.bean.StatefulBeanToCsvBuilder;
+import com.opencsv.bean.*;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import com.zhouruxuan.api.excel.entity.opencsv.ViewWithBoth;
 import com.zhouruxuan.api.excel.entity.opencsv.ViewWithName;
 import com.zhouruxuan.api.excel.entity.opencsv.ViewWithPosition;
 import org.apache.commons.io.input.BOMInputStream;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
@@ -20,6 +18,25 @@ import java.util.List;
 
 public class OpenCsvTest {
     InputStream inputStream = getClass().getResourceAsStream("/excel/ACE.csv");
+
+    @Test
+    public void testWithNameWithSkipLines() {
+        try {
+            InputStreamReader reader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
+
+            List<ViewWithName> views = new CsvToBeanBuilder<ViewWithName>(reader)
+                    .withSkipLines(1)
+                    .withType(ViewWithName.class)
+                    .build()
+                    .parse();
+
+            for (ViewWithName view : views) {
+                System.out.println(view);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * 通过英文名称映射（不设置bom）
@@ -174,4 +191,58 @@ public class OpenCsvTest {
         writer.close();
     }
 
+    @Test
+    public void createCsvFileByColumnPosition() throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
+        List<ViewWithBoth> viewWithBoths = new ArrayList<>();
+        viewWithBoths.add(new ViewWithBoth(1L, 2L, 3L, "4", "5"));
+        viewWithBoths.add(new ViewWithBoth(6L, 7L, 8L, "9", "10"));
+        viewWithBoths.add(new ViewWithBoth(6L, null, 8L, null, null));
+
+
+        FileWriter writer = new FileWriter("src/main/resources/csv/createCsvFileByColumnPosition.csv");
+        writer.write(new String(new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF}));
+
+        CustomMappingStrategy<ViewWithBoth> strategy = new CustomMappingStrategy<>();
+        strategy.setType(ViewWithBoth.class);
+
+        StatefulBeanToCsv<ViewWithBoth> beanToCsv = new StatefulBeanToCsvBuilder<ViewWithBoth>(writer)
+                .withMappingStrategy(strategy)
+                .withSeparator(',')
+                .withApplyQuotesToAll(false)
+                .build();
+
+        beanToCsv.write(viewWithBoths);
+
+        writer.close();
+    }
+
+    class CustomMappingStrategy<T> extends ColumnPositionMappingStrategy<T> {
+        @Override
+        public String[] generateHeader(T t) throws CsvRequiredFieldEmptyException {
+            //  调用父类的generateHeader方法，初始化必要的信息
+            super.generateHeader(t);
+
+            final int numColumns = findMaxFieldIndex();
+
+            String[] header = new String[numColumns + 1];
+
+            BeanField beanField;
+            for (int i = 0; i <= numColumns; i++) {
+                beanField = findField(i);
+                String columnHeaderName = extractHeaderName(beanField);
+                header[i] = columnHeaderName;
+            }
+            return header;
+        }
+
+        private String extractHeaderName(final BeanField beanField) {
+            if (beanField == null || beanField.getField() == null || beanField.getField().getDeclaredAnnotationsByType(CsvBindByName.class).length == 0) {
+                return StringUtils.EMPTY;
+            }
+
+            final CsvBindByName bindByNameAnnotation = beanField.getField().getDeclaredAnnotationsByType(CsvBindByName.class)[0];
+            return bindByNameAnnotation.column();
+        }
+    }
 }
+
