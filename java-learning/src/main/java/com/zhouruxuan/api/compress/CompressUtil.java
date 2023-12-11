@@ -48,8 +48,6 @@ public class CompressUtil {
     public static String ZstdDecompress(String compressedInput) {
         byte[] compressedData = Base64.getDecoder().decode(compressedInput);
         long decompressedSize = Zstd.getFrameContentSize(compressedData);
-        byte[] decompressedData = new byte[(int) decompressedSize];
-        Zstd.decompress(compressedData, decompressedData);
-        return new String(decompressedData, StandardCharsets.UTF_8);
+        return new String(Zstd.decompress(compressedData, (int) decompressedSize), StandardCharsets.UTF_8);
     }
 }

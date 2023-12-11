@@ -19,8 +19,16 @@ public class TestController {
         String poiId = (String) requestBody.get("poiId");
         Long partnerId = Long.valueOf(requestBody.get("partnerId").toString());
         List<Person> personList = (List<Person>) requestBody.get("persons");
+        Person person = (Person) (requestBody.get("person"));
+
         LOGGER.info("poiId ={}", poiId);
         LOGGER.info("partnerId ={}", partnerId);
         LOGGER.info("personList ={}", personList);
+        LOGGER.info("person={}", person.toString());
+    }
+
+    @PostMapping("/testPerson")
+    public void testPerson(@RequestBody Person person) {
+        LOGGER.info("poiId ={}", person.toString());
     }
 }
