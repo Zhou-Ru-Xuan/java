@@ -13,6 +13,7 @@
         <module>algorithm</module>
         <module>data-structure</module>
         <module>java-learning</module>
+        <module>spring-learning</module>
     </modules>
 
     <properties>
@@ -44,10 +45,16 @@
         <validation-api.version>2.0.1.Final</validation-api.version>
         <hibernate-validator.version>8.0.1.Final</hibernate-validator.version>
         <zstd-jni.version>1.5.5-10</zstd-jni.version>
+        <expressly.version>5.0.0</expressly.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.glassfish.expressly</groupId>
+                <artifactId>expressly</artifactId>
+                <version>${expressly.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.github.luben</groupId>
                 <artifactId>zstd-jni</artifactId>

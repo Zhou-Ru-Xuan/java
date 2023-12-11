@@ -2,6 +2,7 @@ package com.example.springlearning.controller;
 
 
 import com.example.springlearning.entity.Person;
+import com.example.springlearning.result.ApiResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,7 +29,8 @@ public class TestController {
     }
 
     @PostMapping("/testPerson")
-    public void testPerson(@RequestBody Person person) {
+    public ApiResult<Boolean> testPerson(@RequestBody Person person) {
         LOGGER.info("poiId ={}", person.toString());
+        return new ApiResult<>(200, null, true);
     }
 }

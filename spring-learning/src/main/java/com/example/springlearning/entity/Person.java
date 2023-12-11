@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Component
@@ -14,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 public class Person {
+    @NotNull(message = "id cannot be null")
     private Long id;
     private String name;
     private Integer age;
