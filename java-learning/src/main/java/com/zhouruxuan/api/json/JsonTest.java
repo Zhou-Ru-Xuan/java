@@ -5,27 +5,22 @@ import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.zhouruxuan.api.compress.CompressUtil;
 import entity.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class JsonTest {
     @Test
-    public void testNullJson(){
+    public void testNullJson() {
         Person person = new Person();
         String jsonString = JSON.toJSONString(person);
         System.out.println(jsonString);
     }
 
     @Test
-    public void testMapJson(){
+    public void testMapJson() {
         String jsonString = "[\n" +
                 "  {\"13356\":0},\n" +
                 "  {\"321465\":1},\n" +
@@ -143,6 +138,12 @@ public class JsonTest {
 
         return roomGoods;
     }
+
+    @Test
+    public void testEnum() {
+        List<RoomGoodsSort> enums = Arrays.asList(RoomGoodsSort.ASC, RoomGoodsSort.DESC);
+        System.out.println(JSON.toJSONString(enums));
+    }
 }
 
 
@@ -154,4 +155,17 @@ class Person {
     private String name;
 }
 
+@Getter
+enum RoomGoodsSort {
+    ASC(1, "Ascending"),
+    DESC(2, "Descending");
 
+    RoomGoodsSort(Integer type, String desc) {
+        this.type = type;
+        this.desc = desc;
+    }
+
+    private final Integer type;
+    private final String desc;
+
+}
