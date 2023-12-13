@@ -12,10 +12,45 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class JsonTest {
+    @Test
+    public void testNullJson(){
+        Person person = new Person();
+        String jsonString = JSON.toJSONString(person);
+        System.out.println(jsonString);
+    }
+
+    @Test
+    public void testMapJson(){
+        String jsonString = "[\n" +
+                "  {\"13356\":0},\n" +
+                "  {\"321465\":1},\n" +
+                "  {\"1234321\":3}\n" +
+                "]";
+        // 解析JSON字符串为Map<String, Integer>
+        Map<String, Integer> map = new HashMap<>();
+        for (Object obj : JSON.parseArray(jsonString)) {
+            JSONObject jsonObject = (JSONObject) obj;
+            for (String key : jsonObject.keySet()) {
+                Integer value = jsonObject.getInteger(key);
+                map.put(key, value);
+            }
+        }
+
+        // 遍历Map，处理每个键值对
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            String key = entry.getKey();
+            Integer value = entry.getValue();
+            // 处理每个键值对，例如打印key和value
+            System.out.println("Key: " + key);
+            System.out.println("Value: " + value);
+            // 其他处理
+        }
+    }
 
     @Test
     public void getIdFromJsonString() throws IOException {

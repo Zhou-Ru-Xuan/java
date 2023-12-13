@@ -30,7 +30,7 @@ public class TestController {
 
     @PostMapping("/testPerson")
     public ApiResult<Boolean> testPerson(@RequestBody Person person) {
-        LOGGER.info("poiId ={}", person.toString());
+        LOGGER.info("person={} age={}", person.toString(), person.getAge());
         return new ApiResult<>(200, null, true);
     }
 }
