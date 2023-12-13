@@ -19,6 +19,9 @@ import java.util.List;
 public class OpenCsvTest {
     InputStream inputStream = getClass().getResourceAsStream("/excel/ACE.csv");
 
+    InputStream excelInputStream = getClass().getResourceAsStream("/excel/ACE.xlsx");
+
+
     @Test
     public void testWithNameWithSkipLines() {
         try {
@@ -67,6 +70,27 @@ public class OpenCsvTest {
     public void testWithName() {
         try {
             InputStreamReader reader = new InputStreamReader(BOMInputStream.builder().setInputStream(inputStream).get(), StandardCharsets.UTF_8);
+
+            List<ViewWithName> views = new CsvToBeanBuilder<ViewWithName>(reader)
+                    .withType(ViewWithName.class)
+                    .build()
+                    .parse();
+
+            for (ViewWithName view : views) {
+                System.out.println(view);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 通过名称映射（设置bom）
+     */
+    @Test
+    public void testWithNameReadExcel() {
+        try {
+            InputStreamReader reader = new InputStreamReader(BOMInputStream.builder().setInputStream(excelInputStream).get(), StandardCharsets.UTF_8);
 
             List<ViewWithName> views = new CsvToBeanBuilder<ViewWithName>(reader)
                     .withType(ViewWithName.class)

@@ -14,6 +14,7 @@ import java.util.List;
 
 public class EasyExcelTest {
     InputStream inputStream = getClass().getResourceAsStream("/excel/ACE.csv");
+    InputStream excelInputStream = getClass().getResourceAsStream("/excel/ACE.xlsx");
 
     public EasyExcelTest() {
     }
@@ -22,6 +23,22 @@ public class EasyExcelTest {
     public void testWithName() {
         try {
             List<ViewWithName> views = EasyExcelFactory.read(inputStream)
+                    .head(ViewWithName.class)
+                    .sheet()
+                    .doReadSync();
+
+            for (ViewWithName view : views) {
+                System.out.println(view);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testWithNameReadExcel() {
+        try {
+            List<ViewWithName> views = EasyExcelFactory.read(excelInputStream)
                     .head(ViewWithName.class)
                     .sheet()
                     .doReadSync();
