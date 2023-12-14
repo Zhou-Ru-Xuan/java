@@ -36,7 +36,7 @@
 
 
     <!--vpoi用户维度查询-->
-    <select id="selectByVpoiUser" parameterType="com.zhouruxuan.mybatis.entity.RoomGoodsSortSettingsDO" resultMap="BaseResultMap">
+    <select id="selectByVpoiUser" resultMap="BaseResultMap">
         select
         id,partner_id, poi_id, user_type, user_id, user_login, room_goods_weight, goods_auto_sort, gmt_created,gmt_modified
         from room_goods_sort_settings

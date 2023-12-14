@@ -56,7 +56,7 @@ public class Main {
         try (SqlSession session = sqlSessionFactory.openSession(true)) {
             RoomGoodsSortSettingsMapper mapper = session.getMapper(RoomGoodsSortSettingsMapper.class);
             mapper.insertOrUpdate(roomGoodsSortSettingsDO);
-            RoomGoodsSortSettingsDO roomGoodsSortSettingsDO1 = mapper.selectByVpoiUser(roomGoodsSortSettingsDO);
+            RoomGoodsSortSettingsDO roomGoodsSortSettingsDO1 = mapper.selectByVpoiUser(roomGoodsSortSettingsDO.getPoiId(), roomGoodsSortSettingsDO.getPartnerId(), roomGoodsSortSettingsDO.getUserId());
             Assertions.assertEquals(roomGoodsSortSettingsDO.getPoiId(), roomGoodsSortSettingsDO1.getPoiId());
             Assertions.assertEquals(roomGoodsSortSettingsDO.getPartnerId(), roomGoodsSortSettingsDO1.getPartnerId());
             Assertions.assertEquals(roomGoodsSortSettingsDO.getUserId(), roomGoodsSortSettingsDO1.getUserId());
@@ -71,7 +71,7 @@ public class Main {
         try (SqlSession session = sqlSessionFactory.openSession(true)) {
             RoomGoodsSortSettingsMapper mapper = session.getMapper(RoomGoodsSortSettingsMapper.class);
             mapper.insertOrUpdate(roomGoodsSortSettingsDO);
-            RoomGoodsSortSettingsDO roomGoodsSortSettingsDO1 = mapper.selectByVpoiUser(roomGoodsSortSettingsDO);
+            RoomGoodsSortSettingsDO roomGoodsSortSettingsDO1 = mapper.selectByVpoiUser(roomGoodsSortSettingsDO.getPoiId(), roomGoodsSortSettingsDO.getPartnerId(), roomGoodsSortSettingsDO.getUserId());
             Assertions.assertEquals(roomGoodsSortSettingsDO.getPoiId(), roomGoodsSortSettingsDO1.getPoiId());
             Assertions.assertEquals(roomGoodsSortSettingsDO.getPartnerId(), roomGoodsSortSettingsDO1.getPartnerId());
             Assertions.assertEquals(roomGoodsSortSettingsDO.getUserId(), roomGoodsSortSettingsDO1.getUserId());
@@ -84,7 +84,7 @@ public class Main {
     public void testQueryParamNull() {
         try (SqlSession session = sqlSessionFactory.openSession(true)) {
             RoomGoodsSortSettingsMapper mapper = session.getMapper(RoomGoodsSortSettingsMapper.class);
-            RoomGoodsSortSettingsDO roomGoodsSortSettingsDO1 = mapper.selectByVpoiUser(RoomGoodsSortSettingsDO.builder().build());
+            RoomGoodsSortSettingsDO roomGoodsSortSettingsDO1 = mapper.selectByVpoiUser(null, null, null);
             Assertions.assertNull(roomGoodsSortSettingsDO1);
         }
     }
@@ -95,7 +95,7 @@ public class Main {
         try (SqlSession session = sqlSessionFactory.openSession(true)) {
             RoomGoodsSortSettingsMapper mapper = session.getMapper(RoomGoodsSortSettingsMapper.class);
             mapper.insertOrUpdate(roomGoodsSortSettingsDO);
-            RoomGoodsSortSettingsDO roomGoodsSortSettingsDO1 = mapper.selectByVpoiUser(roomGoodsSortSettingsDO);
+            RoomGoodsSortSettingsDO roomGoodsSortSettingsDO1 = mapper.selectByVpoiUser(roomGoodsSortSettingsDO.getPoiId(), roomGoodsSortSettingsDO.getPartnerId(), roomGoodsSortSettingsDO.getUserId());
             Assertions.assertEquals(roomGoodsSortSettingsDO.getPoiId(), roomGoodsSortSettingsDO1.getPoiId());
             Assertions.assertEquals(roomGoodsSortSettingsDO.getPartnerId(), roomGoodsSortSettingsDO1.getPartnerId());
             Assertions.assertEquals(roomGoodsSortSettingsDO.getUserId(), roomGoodsSortSettingsDO1.getUserId());
@@ -106,7 +106,7 @@ public class Main {
             roomGoodsSortSettingsDO.setRoomGoodsWeight(roomGoodsWeight);
             roomGoodsSortSettingsDO.setGoodsAutoSort(goodsAutoSort);
             mapper.insertOrUpdate(roomGoodsSortSettingsDO);
-            RoomGoodsSortSettingsDO roomGoodsSortSettingsDO2 = mapper.selectByVpoiUser(roomGoodsSortSettingsDO);
+            RoomGoodsSortSettingsDO roomGoodsSortSettingsDO2 = mapper.selectByVpoiUser(roomGoodsSortSettingsDO.getPoiId(), roomGoodsSortSettingsDO.getPartnerId(), roomGoodsSortSettingsDO.getUserId());
             Assertions.assertEquals(roomGoodsSortSettingsDO.getPoiId(), roomGoodsSortSettingsDO2.getPoiId());
             Assertions.assertEquals(roomGoodsSortSettingsDO.getPartnerId(), roomGoodsSortSettingsDO2.getPartnerId());
             Assertions.assertEquals(roomGoodsSortSettingsDO.getUserId(), roomGoodsSortSettingsDO2.getUserId());
@@ -116,12 +116,12 @@ public class Main {
     }
 
     @Test
-    public void testTinyInt(){
-        RoomGoodsSortSettingsDO roomGoodsSortSettingsDO = new RoomGoodsSortSettingsDO(null, 3L, 3L, 128, 3, "zhouruxuan3", roomGoodsWeight, goodsAutoSort, null, null);
+    public void testTinyInt() {
+        RoomGoodsSortSettingsDO roomGoodsSortSettingsDO = new RoomGoodsSortSettingsDO(null, 3L, 3L, 127, 3, "zhouruxuan3", roomGoodsWeight, goodsAutoSort, null, null);
         try (SqlSession session = sqlSessionFactory.openSession(true)) {
             RoomGoodsSortSettingsMapper mapper = session.getMapper(RoomGoodsSortSettingsMapper.class);
             mapper.insertOrUpdate(roomGoodsSortSettingsDO);
-            RoomGoodsSortSettingsDO roomGoodsSortSettingsDO1 = mapper.selectByVpoiUser(roomGoodsSortSettingsDO);
+            RoomGoodsSortSettingsDO roomGoodsSortSettingsDO1 = mapper.selectByVpoiUser(roomGoodsSortSettingsDO.getPoiId(), roomGoodsSortSettingsDO.getPartnerId(), roomGoodsSortSettingsDO.getUserId());
             Assertions.assertEquals(roomGoodsSortSettingsDO.getPoiId(), roomGoodsSortSettingsDO1.getPoiId());
             Assertions.assertEquals(roomGoodsSortSettingsDO.getPartnerId(), roomGoodsSortSettingsDO1.getPartnerId());
             Assertions.assertEquals(roomGoodsSortSettingsDO.getUserId(), roomGoodsSortSettingsDO1.getUserId());
