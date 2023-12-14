@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhouruxuan.mybatis.mapper.RoomGoodsSortSettingsMapper">
+    <resultMap id="BaseResultMap" type="com.zhouruxuan.mybatis.entity.RoomGoodsSortSettingsDO">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="partner_id" jdbcType="BIGINT" property="partnerId"/>
+        <result column="poi_id" jdbcType="BIGINT" property="poiId"/>
+        <result column="user_type" jdbcType="INTEGER" property="userType"/>
+        <result column="user_id" jdbcType="INTEGER" property="userId"/>
+        <result column="user_login" jdbcType="VARCHAR" property="userLogin"/>
+        <result column="room_goods_weight" jdbcType="VARCHAR" property="roomGoodsWeight"/>
+        <result column="goods_auto_sort" jdbcType="VARCHAR" property="goodsAutoSort"/>
+        <result column="gmt_created" jdbcType="TIMESTAMP" property="gmtCreated"/>
+        <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified"/>
+    </resultMap>
+
+    <!--全量插入-->
+    <insert id="insertOrUpdate" useGeneratedKeys="true" keyProperty="id"
+            parameterType="com.zhouruxuan.mybatis.entity.RoomGoodsSortSettingsDO">
+        insert into room_goods_sort_settings
+        (partner_id, poi_id, user_type, user_id, user_login, room_goods_weight, goods_auto_sort)
+
+        values (#{partnerId},
+                #{poiId},
+                #{userType},
+                #{userId},
+                #{userLogin},
+                #{roomGoodsWeight,jdbcType=VARCHAR},# 可能为NULL，必须指定类型
+                #{goodsAutoSort,jdbcType=VARCHAR}# 可能为NULL，必须指定类型
+               )
+        ON DUPLICATE KEY UPDATE room_goods_weight=#{roomGoodsWeight,jdbcType=VARCHAR},
+                                goods_auto_sort  = #{goodsAutoSort,jdbcType=VARCHAR}
+    </insert>
+
+
+    <!--vpoi用户维度查询-->
+    <select id="selectByVpoiUser" parameterType="com.zhouruxuan.mybatis.entity.RoomGoodsSortSettingsDO" resultMap="BaseResultMap">
+        select
+        id,partner_id, poi_id, user_type, user_id, user_login, room_goods_weight, goods_auto_sort, gmt_created,gmt_modified
+        from room_goods_sort_settings
+        <where>
+             poi_id = #{poiId} and  partner_id = #{partnerId}  and user_id = #{userId}
+        </where>
+    </select>
+
+    <select id="count" resultType="long">
+        select count(*)
+        from room_goods_sort_settings
+        where id > 0;
+    </select>
+
+</mapper>
