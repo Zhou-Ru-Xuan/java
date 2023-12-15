@@ -4,6 +4,7 @@ import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.EasyExcelFactory;
 import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.write.metadata.WriteSheet;
+import com.zhouruxuan.api.excel.entity.easyexcel.ViewWithAllBoth;
 import com.zhouruxuan.api.excel.entity.easyexcel.ViewWithBoth;
 import com.zhouruxuan.api.excel.entity.easyexcel.ViewWithName;
 import com.zhouruxuan.api.excel.entity.easyexcel.ViewWithPosition;
@@ -84,9 +85,25 @@ public class EasyExcelTest {
     }
 
     @Test
+    public void testWithAllBoth() {
+        try {
+            List<ViewWithAllBoth> views = EasyExcelFactory.read(inputStream)
+                    .head(ViewWithAllBoth.class)
+                    .sheet()
+                    .doReadSync();
+
+            for (ViewWithAllBoth view : views) {
+                System.out.println(view);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
     public void write() {
         try {
-            List<ViewWithName> views = EasyExcelFactory.read(inputStream)
+            List<ViewWithBoth> views = EasyExcelFactory.read(inputStream)
                     .head(ViewWithName.class)
                     .sheet()
                     .doReadSync();
@@ -96,7 +113,7 @@ public class EasyExcelTest {
             ExcelWriter excelWriter = EasyExcel.write("easyExcel-write.csv").build();
 
             // 创建Sheet对象，指定写入的sheet名称
-            WriteSheet writeSheet = EasyExcel.writerSheet("Sheet1").head(ViewWithName.class).build();
+            WriteSheet writeSheet = EasyExcel.writerSheet("Sheet1").head(ViewWithBoth.class).build();
 
             // 写入数据
             excelWriter.write(views, writeSheet);

@@ -3,6 +3,7 @@ package com.zhouruxuan.api.excel;
 import com.opencsv.bean.*;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
+import com.zhouruxuan.api.excel.entity.opencsv.ViewWithAllBoth;
 import com.zhouruxuan.api.excel.entity.opencsv.ViewWithBoth;
 import com.zhouruxuan.api.excel.entity.opencsv.ViewWithName;
 import com.zhouruxuan.api.excel.entity.opencsv.ViewWithPosition;
@@ -152,16 +153,35 @@ public class OpenCsvTest {
      * 同时使用两个注解（不跳过第一行）
      */
     @Test
-    public void testWithBothNoSkipLine() {
+    public void testWithAllBothNoSkipLine() {
         try {
             InputStreamReader reader = new InputStreamReader(BOMInputStream.builder().setInputStream(inputStream).get(), StandardCharsets.UTF_8);
 
-            List<ViewWithBoth> views = new CsvToBeanBuilder<ViewWithBoth>(reader)
-                    .withType(ViewWithBoth.class)
+            List<ViewWithAllBoth> views = new CsvToBeanBuilder<ViewWithAllBoth>(reader)
+                    .withType(ViewWithAllBoth.class)
                     .build()
                     .parse();
 
-            for (ViewWithBoth view : views) {
+            for (ViewWithAllBoth view : views) {
+                System.out.println(view);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testWithAllBoth() {
+        try {
+            InputStreamReader reader = new InputStreamReader(BOMInputStream.builder().setInputStream(inputStream).get(), StandardCharsets.UTF_8);
+
+            List<ViewWithAllBoth> views = new CsvToBeanBuilder<ViewWithAllBoth>(reader)
+                    .withSkipLines(1)
+                    .withType(ViewWithAllBoth.class)
+                    .build()
+                    .parse();
+
+            for (ViewWithAllBoth view : views) {
                 System.out.println(view);
             }
         } catch (Exception e) {
@@ -217,25 +237,25 @@ public class OpenCsvTest {
 
     @Test
     public void createCsvFileByColumnPosition() throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
-        List<ViewWithBoth> viewWithBoths = new ArrayList<>();
-        viewWithBoths.add(new ViewWithBoth(1L, 2L, 3L, "4", "5"));
-        viewWithBoths.add(new ViewWithBoth(6L, 7L, 8L, "9", "10"));
-        viewWithBoths.add(new ViewWithBoth(6L, null, 8L, null, null));
+        List<ViewWithAllBoth> viewWithAllBoths = new ArrayList<>();
+        viewWithAllBoths.add(new ViewWithAllBoth(1L, 2L, 3L, "4", "5"));
+        viewWithAllBoths.add(new ViewWithAllBoth(6L, 7L, 8L, "9", "10"));
+        viewWithAllBoths.add(new ViewWithAllBoth(6L, null, 8L, null, null));
 
 
         FileWriter writer = new FileWriter("src/main/resources/csv/createCsvFileByColumnPosition.csv");
         writer.write(new String(new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF}));
 
-        CustomMappingStrategy<ViewWithBoth> strategy = new CustomMappingStrategy<>();
-        strategy.setType(ViewWithBoth.class);
+        CustomMappingStrategy<ViewWithAllBoth> strategy = new CustomMappingStrategy<>();
+        strategy.setType(ViewWithAllBoth.class);
 
-        StatefulBeanToCsv<ViewWithBoth> beanToCsv = new StatefulBeanToCsvBuilder<ViewWithBoth>(writer)
+        StatefulBeanToCsv<ViewWithAllBoth> beanToCsv = new StatefulBeanToCsvBuilder<ViewWithAllBoth>(writer)
                 .withMappingStrategy(strategy)
                 .withSeparator(',')
                 .withApplyQuotesToAll(false)
                 .build();
 
-        beanToCsv.write(viewWithBoths);
+        beanToCsv.write(viewWithAllBoths);
 
         writer.close();
     }

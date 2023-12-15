@@ -2,7 +2,7 @@ package com.example.springlearning.entity.DO;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
-import com.zhouruxuan.mybatis.entity.GoodsSortRuleItemModel;
+import com.example.springlearning.entity.GoodsSortRuleItemModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

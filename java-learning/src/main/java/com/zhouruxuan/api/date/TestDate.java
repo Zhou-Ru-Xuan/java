@@ -3,8 +3,6 @@ package com.zhouruxuan.api.date;
 import org.junit.jupiter.api.Test;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -40,19 +38,29 @@ public class TestDate {
      */
     @Test
     public void testDD() {
-        tryit(2020, 01, 20, "MM/DD/YYYY");
-        tryit(2020, 01, 21, "DD/MM/YYYY");
-        tryit(2020, 01, 22, "YYYY-MM-DD");
-        tryit(2020, 03, 17, "MM/DD/YYYY");
-        tryit(2020, 03, 18, "DD/MM/YYYY");
-        tryit(2020, 03, 19, "YYYY-MM-DD");
+        tryit("2020-03-17", "YYYY/MM/DD");
+        tryit("2020-03-18", "YYYY/MM/DD");
     }
 
-    private void tryit(int Y, int M, int D, String pat) {
-        DateTimeFormatter fmt = DateTimeFormatter.ofPattern(pat);
-        LocalDate dat = LocalDate.of(Y, M, D);
-        String str = fmt.format(dat);
-        System.out.printf("Y=%04d M=%02d D=%02d formatted with " + "\"%s\" -> %s\n", Y, M, D, pat, str);
+    private void tryit(String dateStr, String pat) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date;
+        try {
+            date = sdf.parse(dateStr);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        // 获取年、月、日
+        int Y = calendar.get(Calendar.YEAR);
+        int M = calendar.get(Calendar.MONTH) + 1;
+        int D = calendar.get(Calendar.DAY_OF_MONTH);
+
+        SimpleDateFormat fmt = new SimpleDateFormat(pat);
+        String str = fmt.format(date);
+        System.out.printf("%s 转 %s 格式: %s\n", dateStr, pat, str);
     }
 
 }
