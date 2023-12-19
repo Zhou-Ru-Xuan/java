@@ -1,15 +1,15 @@
 package com.zhouruxuan.api.mapstruct;
 
 
-import com.zhouruxuan.api.mapstruct.entity.UserEntity;
-import com.zhouruxuan.api.mapstruct.entity.UserEntity3;
-import com.zhouruxuan.api.mapstruct.entity.UserPo;
-import com.zhouruxuan.api.mapstruct.entity.UserEntity2;
+import com.zhouruxuan.api.mapstruct.entity.*;
+import com.zhouruxuan.api.mapstruct.mapper.DoctorMapper;
 import com.zhouruxuan.api.mapstruct.mapper.IPersonMapper;
 import org.junit.Test;
 import org.springframework.beans.BeanUtils;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class MapStructTest {
     public static void main(String[] args) {
@@ -98,8 +98,13 @@ public class MapStructTest {
     }
 
     @Test
-    public void test5() {
-
+    public void testDoctor() {
+        ArrayList<Doctor> doctors = new ArrayList<>();
+        doctors.add(new Doctor(1, "1", "1"));
+        doctors.add(new Doctor(2, "2", "2"));
+        doctors.add(new Doctor(3, "3", "3"));
+        List<DoctorDto> dtos = DoctorMapper.INSTANCE.toDtos(doctors);
+        System.out.println(dtos);
     }
 
 }
