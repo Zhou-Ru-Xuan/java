@@ -7,9 +7,11 @@ import lombok.Data;
 @Data
 public class ViewWithBoth {
     @CsvBindByName(column = "A")
+    @CsvBindByPosition(position = 0)
     private Long a;
 
     @CsvBindByName(column = "B")
+    @CsvBindByPosition(position = 1)
     private Long b;
 
     @CsvBindByName(column = "C")
