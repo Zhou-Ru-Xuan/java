@@ -190,6 +190,26 @@ public class OpenCsvTest {
     }
 
     @Test
+    public void testWithAllBoth2() {
+        try {
+            InputStreamReader reader = new InputStreamReader(BOMInputStream.builder().setInputStream(
+                    getClass().getResourceAsStream("/csv/ACE2.csv")).get(), StandardCharsets.UTF_8);
+
+            List<ViewWithAllBoth> views = new CsvToBeanBuilder<ViewWithAllBoth>(reader)
+                    .withSkipLines(1)
+                    .withType(ViewWithAllBoth.class)
+                    .build()
+                    .parse();
+
+            for (ViewWithAllBoth view : views) {
+                System.out.println(view);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
     public void testWithBoth() {
         try {
             InputStreamReader reader = new InputStreamReader(BOMInputStream.builder().setInputStream(inputStream).get(), StandardCharsets.UTF_8);
