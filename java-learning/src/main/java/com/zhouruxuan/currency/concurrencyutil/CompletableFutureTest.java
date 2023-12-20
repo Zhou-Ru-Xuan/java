@@ -1,5 +1,6 @@
 package com.zhouruxuan.currency.concurrencyutil;
 
+import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.*;
 import org.junit.Test;
 
@@ -340,6 +341,35 @@ public class CompletableFutureTest {
 
         //如果不加 get()方法这一行，看不到异常信息
         //future.get();
+
+    }
+
+    @Test
+    public void testHandleExceptionWithJoin() {
+        List<CompletableFuture<String>> futureList = Lists.newArrayListWithExpectedSize(3);
+        ExecutorService executor = Executors.newFixedThreadPool(4);
+        CompletableFuture<String> step1 = CompletableFuture.supplyAsync(() -> {
+            System.out.println("执行【步骤1】");
+            throw new RuntimeException("步骤1执行异常");
+        }, executor);
+        CompletableFuture<String> step2 = CompletableFuture.supplyAsync(() -> {
+            System.out.println("执行【步骤2】");
+            return "【步骤2的执行结果】";
+        }, executor);
+        CompletableFuture<String> step3 = CompletableFuture.supplyAsync(() -> {
+            System.out.println("执行【步骤3】");
+            return "【步骤3的执行结果】";
+        }, executor);
+        CompletableFuture<String> step4 = CompletableFuture.supplyAsync(() -> {
+            System.out.println("执行【步骤4】");
+            return "【步骤4的执行结果】";
+        }, executor);
+        futureList.add(step1);
+        futureList.add(step2);
+        futureList.add(step3);
+        futureList.add(step4);
+
+        CompletableFuture.allOf(futureList.toArray(new CompletableFuture[0])).join();
 
     }
 
