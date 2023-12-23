@@ -230,12 +230,11 @@ public class OpenCsvTest {
 
     @Test
     public void createCsvFileByColumnName() throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
-        ViewWithName viewWithName = new ViewWithName();
-        viewWithName.setA(1234L);
-        viewWithName.setB(2234L);
-        List<ViewWithName> viewWithNames = new ArrayList<>();
-        viewWithNames.add(viewWithName);
-        createCsvFileByColumnName("write-1234.csv", viewWithNames);
+        List<ViewWithName> viewWithAllBoths = new ArrayList<>();
+        viewWithAllBoths.add(new ViewWithName(1L, 2L, null, "4", null));
+        viewWithAllBoths.add(new ViewWithName(6L, 7L, null, "9", null));
+        viewWithAllBoths.add(new ViewWithName(18L, 19L, null, "20", null));
+        createCsvFileByColumnName("src/main/resources/csv/writeABDByName.csv", viewWithAllBoths);
     }
 
     public void createCsvFileByColumnName(String fileName, List<ViewWithName> dataList) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
@@ -258,12 +257,37 @@ public class OpenCsvTest {
     @Test
     public void createCsvFileByColumnPosition() throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
         List<ViewWithAllBoth> viewWithAllBoths = new ArrayList<>();
-        viewWithAllBoths.add(new ViewWithAllBoth(1L, 2L, 3L, "4", "5"));
-        viewWithAllBoths.add(new ViewWithAllBoth(6L, 7L, 8L, "9", "10"));
-        viewWithAllBoths.add(new ViewWithAllBoth(6L, null, 8L, null, null));
+        viewWithAllBoths.add(new ViewWithAllBoth(1L, 2L, null, "4", null));
+        viewWithAllBoths.add(new ViewWithAllBoth(6L, 7L, null, "9", null));
+        viewWithAllBoths.add(new ViewWithAllBoth(18L, 19L, null, "20", null));
 
 
         FileWriter writer = new FileWriter("src/main/resources/csv/createCsvFileByColumnPosition.csv");
+        writer.write(new String(new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF}));
+
+        ColumnPositionMappingStrategy<ViewWithAllBoth> strategy = new ColumnPositionMappingStrategy<>();
+        strategy.setType(ViewWithAllBoth.class);
+
+        StatefulBeanToCsv<ViewWithAllBoth> beanToCsv = new StatefulBeanToCsvBuilder<ViewWithAllBoth>(writer)
+                .withMappingStrategy(strategy)
+                .withSeparator(',')
+                .withApplyQuotesToAll(false)
+                .build();
+
+        beanToCsv.write(viewWithAllBoths);
+
+        writer.close();
+    }
+
+    @Test
+    public void createCsvFileByColumnPositionByCustomMappingStrategy() throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
+        List<ViewWithAllBoth> viewWithAllBoths = new ArrayList<>();
+        viewWithAllBoths.add(new ViewWithAllBoth(1L, 2L, null, "4", null));
+        viewWithAllBoths.add(new ViewWithAllBoth(6L, 7L, null, "9", null));
+        viewWithAllBoths.add(new ViewWithAllBoth(18L, 19L, null, "20", null));
+
+
+        FileWriter writer = new FileWriter("src/main/resources/csv/createCsvFileByColumnPositionByCustomMappingStrategy.csv");
         writer.write(new String(new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF}));
 
         CustomMappingStrategy<ViewWithAllBoth> strategy = new CustomMappingStrategy<>();
@@ -283,7 +307,7 @@ public class OpenCsvTest {
     class CustomMappingStrategy<T> extends ColumnPositionMappingStrategy<T> {
         @Override
         public String[] generateHeader(T t) throws CsvRequiredFieldEmptyException {
-            //  调用父类的generateHeader方法，初始化必要的信息
+            //  调用父类的generateHeader方法，初始化headerIndex属性
             super.generateHeader(t);
 
             final int numColumns = findMaxFieldIndex();
@@ -296,6 +320,7 @@ public class OpenCsvTest {
                 String columnHeaderName = extractHeaderName(beanField);
                 header[i] = columnHeaderName;
             }
+
             return header;
         }
 
@@ -306,6 +331,95 @@ public class OpenCsvTest {
 
             final CsvBindByName bindByNameAnnotation = beanField.getField().getDeclaredAnnotationsByType(CsvBindByName.class)[0];
             return bindByNameAnnotation.column();
+        }
+    }
+
+
+    @Test
+    public void createCsvFileByColumnPositionOnlyABD() throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
+        List<ViewWithAllBoth> viewWithAllBoths = new ArrayList<>();
+        viewWithAllBoths.add(new ViewWithAllBoth(1L, 2L, null, "4", null));// 可以发现，数据在第三个和第五个是明显没有值的
+        viewWithAllBoths.add(new ViewWithAllBoth(6L, 7L, null, "9", null));
+        viewWithAllBoths.add(new ViewWithAllBoth(18L, 19L, null, "20", null));
+
+        FileWriter writer = new FileWriter("src/main/resources/csv/createCsvFileByColumnPositionOnlyABD.csv");
+        writer.write(new String(new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF}));
+
+        ABDCustomPositionMappingStrategy strategy = new ABDCustomPositionMappingStrategy();// 自定义策略
+        strategy.setType(ViewWithAllBoth.class);
+
+        StatefulBeanToCsv<ViewWithAllBoth> beanToCsv = new StatefulBeanToCsvBuilder<ViewWithAllBoth>(writer)
+                .withMappingStrategy(strategy)
+                .withSeparator(',')
+                .withApplyQuotesToAll(false)
+                .build();
+
+        beanToCsv.write(viewWithAllBoths);
+
+        writer.close();
+    }
+
+    class ABDCustomPositionMappingStrategy extends ColumnPositionMappingStrategy<ViewWithAllBoth> {
+        @Override
+        public String[] generateHeader(ViewWithAllBoth t) throws CsvRequiredFieldEmptyException {
+            String[] header = new String[3];
+            header[0] = "A";
+            header[1] = "B";
+            header[2] = "D";
+            return header;
+        }
+
+        @Override
+        public String[] transmuteBean(ViewWithAllBoth bean) {
+            String[] values = new String[3];
+            values[0] = String.valueOf(bean.getA());
+            values[1] = String.valueOf(bean.getB());
+            values[2] = String.valueOf(bean.getD());
+            return values;
+        }
+    }
+
+    @Test
+    public void createCsvFileByColumnNameOnlyABD() throws CsvRequiredFieldEmptyException, CsvDataTypeMismatchException, IOException {
+        List<ViewWithName> viewWithAllBoths = new ArrayList<>();
+        viewWithAllBoths.add(new ViewWithName(1L, 2L, null, "4", null));// 可以发现，数据在第三个和第五个是明显没有值的
+        viewWithAllBoths.add(new ViewWithName(6L, 7L, null, "9", null));
+        viewWithAllBoths.add(new ViewWithName(18L, 19L, null, "20", null));
+
+        FileWriter writer = new FileWriter("src/main/resources/csv/createCsvFileByColumnNameOnlyABD.csv");
+        writer.write(new String(new byte[]{(byte) 0xEF, (byte) 0xBB, (byte) 0xBF}));
+
+        ABDCustomHeaderNameMappingStrategy strategy = new ABDCustomHeaderNameMappingStrategy();// 自定义策略
+        strategy.setType(ViewWithName.class);
+
+        StatefulBeanToCsv<ViewWithName> beanToCsv = new StatefulBeanToCsvBuilder<ViewWithName>(writer)
+                .withMappingStrategy(strategy)
+                .withSeparator(',')
+                .withApplyQuotesToAll(false)
+                .build();
+
+        beanToCsv.write(viewWithAllBoths);
+
+        writer.close();
+    }
+
+    class ABDCustomHeaderNameMappingStrategy extends HeaderColumnNameMappingStrategy<ViewWithName> {
+        @Override
+        public String[] generateHeader(ViewWithName t) throws CsvRequiredFieldEmptyException {
+            String[] header = new String[3];
+            header[0] = "A";
+            header[1] = "B";
+            header[2] = "D";
+            return header;
+        }
+
+        @Override
+        public String[] transmuteBean(ViewWithName bean) {
+            String[] values = new String[3];
+            values[0] = String.valueOf(bean.getA());
+            values[1] = String.valueOf(bean.getB());
+            values[2] = String.valueOf(bean.getD());
+            return values;
         }
     }
 }

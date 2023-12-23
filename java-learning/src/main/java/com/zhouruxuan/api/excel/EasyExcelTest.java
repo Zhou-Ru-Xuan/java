@@ -11,6 +11,8 @@ import com.zhouruxuan.api.excel.entity.easyexcel.ViewWithPosition;
 import org.junit.jupiter.api.Test;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class EasyExcelTest {
@@ -103,17 +105,16 @@ public class EasyExcelTest {
     @Test
     public void write() {
         try {
-            List<ViewWithBoth> views = EasyExcelFactory.read(inputStream)
-                    .head(ViewWithName.class)
-                    .sheet()
-                    .doReadSync();
-
+            List<ViewWithAllBoth> views = new ArrayList<>();
+            views.add(new ViewWithAllBoth(1L, null, 3L, "4", null));
+            views.add(new ViewWithAllBoth(6L, null, 8L, "9", null));
+            views.add(new ViewWithAllBoth(11L, null, 13L, "18", null));
 
             // 创建ExcelWriter对象
-            ExcelWriter excelWriter = EasyExcel.write("easyExcel-write.csv").build();
+            ExcelWriter excelWriter = EasyExcel.write("src/main/resources/csv/easyExcel-write.csv").build();
 
             // 创建Sheet对象，指定写入的sheet名称
-            WriteSheet writeSheet = EasyExcel.writerSheet("Sheet1").head(ViewWithBoth.class).build();
+            WriteSheet writeSheet = EasyExcel.writerSheet("Sheet1").head(ViewWithAllBoth.class).build();
 
             // 写入数据
             excelWriter.write(views, writeSheet);
@@ -123,6 +124,48 @@ public class EasyExcelTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void writeWithExceptedCol() {
+        try {
+            List<ViewWithAllBoth> views = new ArrayList<>();
+            views.add(new ViewWithAllBoth(1L, null, 3L, "4", null));
+            views.add(new ViewWithAllBoth(6L, null, 8L, "9", null));
+            views.add(new ViewWithAllBoth(11L, null, 13L, "18", null));
+
+            // 创建ExcelWriter对象
+            ExcelWriter excelWriter = EasyExcel.write("src/main/resources/csv/easyExcel-write-ExceptedCol.csv")
+                    .head(head())
+                    .includeColumnFieldNames(Arrays.asList("a", "c", "d"))
+                    .build();
+
+            // 创建Sheet对象，指定写入的sheet名称
+            WriteSheet writeSheet = EasyExcel.writerSheet("Sheet1").build();
+
+            // 写入数据
+            excelWriter.write(views, writeSheet);
+
+            // 关闭ExcelWriter对象，释放资源
+            excelWriter.finish();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private List<List<String>> head() {
+        List<List<String>> head = new ArrayList<>();
+        List<String> row1 = new ArrayList<>();
+        row1.add("A");
+        List<String> row2 = new ArrayList<>();
+        row2.add("C");
+        List<String> row3 = new ArrayList<>();
+        row3.add("D");
+        head.add(row1);
+        head.add(row2);
+        head.add(row3);
+        return head;
     }
 
 }

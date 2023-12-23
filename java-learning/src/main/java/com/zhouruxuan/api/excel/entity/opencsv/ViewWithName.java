@@ -1,13 +1,13 @@
 package com.zhouruxuan.api.excel.entity.opencsv;
 
 import com.opencsv.bean.CsvBindByName;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Setter
 @ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class ViewWithName {
     @CsvBindByName(column = "A")
     private Long a;

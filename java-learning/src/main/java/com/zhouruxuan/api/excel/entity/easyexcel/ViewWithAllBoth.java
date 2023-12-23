@@ -1,9 +1,13 @@
 package com.zhouruxuan.api.excel.entity.easyexcel;
 
 import com.alibaba.excel.annotation.ExcelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ViewWithAllBoth {
     @ExcelProperty(value = "A", index = 0)
     private Long a;
