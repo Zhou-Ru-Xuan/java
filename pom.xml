@@ -47,10 +47,16 @@
         <zstd-jni.version>1.5.5-10</zstd-jni.version>
         <expressly.version>5.0.0</expressly.version>
         <mybatis.version>3.5.14</mybatis.version>
+        <libthrift.verson>0.19.0</libthrift.verson>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.apache.thrift</groupId>
+                <artifactId>libthrift</artifactId>
+                <version>${libthrift.verson}</version>
+            </dependency>
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>

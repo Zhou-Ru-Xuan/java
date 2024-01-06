@@ -1,26 +1,26 @@
 package com.zhouruxuan.api.excel.entity.easyexcel;
 
 import com.alibaba.excel.annotation.ExcelProperty;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Setter
 @ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class ViewWithName {
-    @ExcelProperty("A")
+    @ExcelProperty("E")
     private Long a;
 
-    @ExcelProperty("B")
+    @ExcelProperty("D")
     private Long b;
 
     @ExcelProperty("C")
     private Long c;
 
-    @ExcelProperty("D")
+    @ExcelProperty("B")
     private String d;
 
-    @ExcelProperty("E")
+    @ExcelProperty("A")
     private String e;
 }

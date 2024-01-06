@@ -234,7 +234,7 @@ public class OpenCsvTest {
         viewWithAllBoths.add(new ViewWithName(1L, 2L, null, "4", null));
         viewWithAllBoths.add(new ViewWithName(6L, 7L, null, "9", null));
         viewWithAllBoths.add(new ViewWithName(18L, 19L, null, "20", null));
-        createCsvFileByColumnName("src/main/resources/csv/writeABDByName.csv", viewWithAllBoths);
+        createCsvFileByColumnName("src/main/resources/csv/createCsvFileByColumnName.csv", viewWithAllBoths);
     }
 
     public void createCsvFileByColumnName(String fileName, List<ViewWithName> dataList) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {

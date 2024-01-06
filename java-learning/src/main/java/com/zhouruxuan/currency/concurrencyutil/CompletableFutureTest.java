@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.*;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
 
@@ -344,6 +345,9 @@ public class CompletableFutureTest {
 
     }
 
+    /**
+     * 测试join方法能不能抛出异常
+     */
     @Test
     public void testHandleExceptionWithJoin() {
         List<CompletableFuture<String>> futureList = Lists.newArrayListWithExpectedSize(3);
@@ -373,4 +377,30 @@ public class CompletableFutureTest {
 
     }
 
+    /**
+     * 测试异步中添加CF
+     */
+    @Test
+    public void testAsyncAddCf() {
+        List<CompletableFuture> futures = new ArrayList<>();
+
+
+        futures.add(CompletableFuture.runAsync(() -> addInCf(futures, "one")));
+        futures.add(CompletableFuture.runAsync(() -> addInCf(futures, "two")));
+        futures.add(CompletableFuture.runAsync(() -> addInCf(futures, "three")));
+        while (futures.size() < 6){
+            System.out.println(futures.size());
+        } //空轮询等待内部填充完futures
+        System.out.println("add end");
+        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
+    }
+
+    void addInCf(List<CompletableFuture> futures, String result) {
+        try {
+            Thread.sleep(10L);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        futures.add(CompletableFuture.runAsync(() -> System.out.println(result)));
+    }
 }

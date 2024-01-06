@@ -119,4 +119,12 @@ public class ExceptionTest {
             return 2;
         }
     }
+    @Test
+    public void testRuntimeException(){
+        try{
+            throw new IllegalStateException();
+        }catch (Exception e){
+            System.out.println("catch");
+        }
+    }
 }

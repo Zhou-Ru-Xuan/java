@@ -18,6 +18,10 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.apache.thrift</groupId>
+            <artifactId>libthrift</artifactId>
+        </dependency>
         <!-- slf4j核心包-->
         <dependency>
             <groupId>org.slf4j</groupId>
