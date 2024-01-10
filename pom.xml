@@ -48,10 +48,16 @@
         <expressly.version>5.0.0</expressly.version>
         <mybatis.version>3.5.14</mybatis.version>
         <libthrift.verson>0.19.0</libthrift.verson>
+        <cglib.version>3.3.0</cglib.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>cglib</groupId>
+                <artifactId>cglib</artifactId>
+                <version>${cglib.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.apache.thrift</groupId>
                 <artifactId>libthrift</artifactId>

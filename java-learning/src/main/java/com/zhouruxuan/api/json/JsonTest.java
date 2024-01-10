@@ -3,12 +3,17 @@ package com.zhouruxuan.api.json;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
+import com.alibaba.fastjson2.TypeReference;
 import com.zhouruxuan.api.compress.CompressUtil;
 import entity.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.*;
 
 public class JsonTest {
@@ -45,6 +50,39 @@ public class JsonTest {
             System.out.println("Value: " + value);
             // 其他处理
         }
+    }
+
+
+    @Test
+    public void testGetMapFromJson() {
+        String jsonString = "{\"415117565\":0,\"426222689\":0,\"414524723\":0,\"407223373\":11,\"423304432\":2,\"420306048\":3,\"426149801\":4,\"25009645\":1,\"413106061\":12,\"421423885\":0,\"425600075\":5,\"98849138\":0,\"407267985\":1,\"422477426\":18,\"421721980\":1,\"425379004\":6,\"407641386\":2,\"425379005\":7,\"407641387\":3,\"423639528\":8,\"420275493\":9,\"421925711\":10,\"420348004\":4,\"407281261\":5,\"427805779\":11,\"422302407\":12,\"427272455\":13,\"53226524\":3,\"53226525\":1,\"427272454\":14,\"407305207\":6,\"416721317\":7,\"408981075\":8,\"408981076\":9,\"422880130\":15,\"420275450\":19,\"414524739\":1,\"422576967\":16,\"407249150\":10,\"422570835\":17}";
+
+        // 创建一个TypeReference对象，指定解析后的对象类型为Map<String, Integer>
+        Type type = new TypeReference<Map<String, Integer>>() {
+        }.getType();
+
+        // 解析JSON字符串为Map
+        Map<String, Integer> dataMap = JSON.parseObject(jsonString, type);
+
+        // 遍历Map，处理每个键值对
+        for (Map.Entry<String, Integer> entry : dataMap.entrySet()) {
+            String key = entry.getKey();
+            Integer value = entry.getValue();
+
+            // 处理每个键值对，例如打印key和value
+            System.out.println("Key: " + key);
+            System.out.println("Value: " + value);
+            // 其他处理
+        }
+    }
+
+    @Test
+    public void testWriteMapToJson() {
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(1, 1);
+        map.put(2, 2);
+        map.put(3, 3);
+        System.out.println(JSON.toJSONString(map));
     }
 
     @Test

@@ -1,6 +1,7 @@
 package com.example.springlearning.aop;
 
 import com.example.springlearning.result.ApiResult;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -14,6 +15,7 @@ import java.util.Set;
 
 @Aspect
 @Component
+@Slf4j
 public class ValidationAspect {
     private static Validator validator;
 
@@ -25,6 +27,7 @@ public class ValidationAspect {
 
     @Around("execution(* com.example.springlearning.controller.*.*(..))")
     public Object beforeMethod(ProceedingJoinPoint joinPoint) throws Throwable {
+        LOGGER.info("beforeMethod1");
         Object[] args = joinPoint.getArgs();
         for (Object arg : args) {
             Set<ConstraintViolation<Object>> violations = validator.validate(arg);
@@ -34,4 +37,13 @@ public class ValidationAspect {
         }
         return joinPoint.proceed();
     }
+
+    @Around("execution(* com.example.springlearning.controller.*.*(..))")
+    public Object beforeMethod2(ProceedingJoinPoint joinPoint) throws Throwable {
+        LOGGER.info("beforeMethod2");
+        Thread.sleep(1000L);
+        return joinPoint.proceed();
+    }
+
+
 }

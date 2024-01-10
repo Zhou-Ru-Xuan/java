@@ -3,6 +3,7 @@ package com.zhouruxuan.currency.concurrencyutil;
 import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.*;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -318,15 +319,22 @@ public class CompletableFutureTest {
      */
     @Test
     public void testHandleException2() {
-        CompletableFuture<String> future = CompletableFuture.supplyAsync(() -> "Hello, World!");
+        ExecutorService executor = Executors.newFixedThreadPool(4, r -> new Thread(r, "customer"));
+        CompletableFuture<String> future = CompletableFuture.supplyAsync(() -> {
+            System.out.println(Thread.currentThread().getName());
+            return "Hello, World!";
+        }, executor);
 
-        future.whenComplete((result, error) -> {
+        CompletableFuture<String> completableFuture = future.whenComplete((result, error) -> {
+            System.out.println(Thread.currentThread().getName());
             if (error != null) {
                 fail("Future completed exceptionally", error);
             } else {
                 assertEquals("Hello, World!", result);
             }
         });
+
+        Assertions.assertEquals(future, completableFuture);
     }
 
     @Test
@@ -388,7 +396,7 @@ public class CompletableFutureTest {
         futures.add(CompletableFuture.runAsync(() -> addInCf(futures, "one")));
         futures.add(CompletableFuture.runAsync(() -> addInCf(futures, "two")));
         futures.add(CompletableFuture.runAsync(() -> addInCf(futures, "three")));
-        while (futures.size() < 6){
+        while (futures.size() < 6) {
             System.out.println(futures.size());
         } //空轮询等待内部填充完futures
         System.out.println("add end");

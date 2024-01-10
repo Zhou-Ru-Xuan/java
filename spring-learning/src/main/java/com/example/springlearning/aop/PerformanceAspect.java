@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
@@ -25,5 +26,10 @@ public class PerformanceAspect {
         String methodName = pjp.getSignature().getName();
         LOGGER.info("Execution of " + methodName + " took " + TimeUnit.NANOSECONDS.toMillis(end - start) + " ms");
         return retval;
+    }
+
+    @Before("execution(* com.example.springlearning.controller.*.*(..))")
+    public void beforeMethod3() {
+        LOGGER.info("beforeMethod3");
     }
 }
