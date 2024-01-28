@@ -1,4 +1,4 @@
-package com.example.springlearning.entity;
+package com.example.springlearning.entity.pojo;
 
 import lombok.*;
 

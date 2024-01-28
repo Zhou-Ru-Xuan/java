@@ -2,7 +2,7 @@ package com.example.springlearning.controller;
 
 
 import com.example.springlearning.annotation.ShowMethodName;
-import com.example.springlearning.entity.Person;
+import com.example.springlearning.entity.pojo.Person;
 import com.example.springlearning.result.ApiResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;

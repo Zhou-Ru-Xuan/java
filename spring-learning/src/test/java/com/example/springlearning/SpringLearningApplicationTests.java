@@ -1,7 +1,7 @@
 package com.example.springlearning;
 
 import com.example.springlearning.dao.PersonDao;
-import com.example.springlearning.entity.Person;
+import com.example.springlearning.entity.pojo.Person;
 import com.example.springlearning.service.StudentService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -23,7 +23,6 @@ class SpringLearningApplicationTests {
 
     @Test
     void test() {
-        Person personById = personDao.getPersonById(123L);
-        LOGGER.info(personById.toString());
+        LOGGER.info("person={}", person.toString());
     }
 }

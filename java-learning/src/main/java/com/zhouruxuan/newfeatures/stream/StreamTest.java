@@ -1,7 +1,9 @@
 package com.zhouruxuan.newfeatures.stream;
 
 import com.google.common.base.Joiner;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 
 import java.util.*;
 import java.util.concurrent.ExecutionException;
@@ -16,6 +18,16 @@ import java.util.stream.Stream;
  * @date 2023-03-27
  **/
 public class StreamTest {
+
+    @Test
+    public void testOptional() {
+        String s = "";
+        String aDefault = Optional.ofNullable(s).filter(StringUtils::isNotBlank).orElse("default");
+        String bDefault = Optional.ofNullable(s).orElse("default");
+        Assertions.assertEquals("default", aDefault);
+        Assertions.assertEquals(s, bDefault);
+    }
+
     @Test
     public void testForEach() {
         // 使用Stream.forEach()迭代
@@ -157,7 +169,7 @@ public class StreamTest {
     }
 
     @Test
-    public void testGroupBy(){
+    public void testGroupBy() {
         List<Long> goodsIds = Arrays.asList(1L, 2L, 3L, 2L, 4L, 3L, 5L, 6L, 7L, 8L, 9L, 10L);
         // 假设goodsIds有1000个元素
 

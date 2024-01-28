@@ -26,6 +26,18 @@ public class CompareTest {
     }
 
     @Test
+    public void testBoolean2Cmp() {
+        CompareBean trueBean = new CompareBean(true);
+        CompareBean falseBean = new CompareBean(false);
+        List<CompareBean> list = new ArrayList<>();
+        list.add(trueBean);
+        list.add(falseBean);
+        list.add(new CompareBean(null));
+        list.sort(Comparator.comparingInt((CompareBean compareBean) -> compareBean.getA() == null ? -1 : 1));
+        System.out.println(list);
+    }
+
+    @Test
     public void testArrCmp() {
         List<Integer> A = Arrays.asList(1, 3, 5, 7, 9);
         List<CompareBean> B = Arrays.asList(new CompareBean(3), new CompareBean(9), new CompareBean(1), new CompareBean(7), new CompareBean(5));

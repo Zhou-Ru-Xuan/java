@@ -1,7 +1,7 @@
 package com.example.springlearning.dao.impl;
 
 import com.example.springlearning.dao.PersonDao;
-import com.example.springlearning.entity.Person;
+import com.example.springlearning.entity.pojo.Person;
 import org.springframework.stereotype.Repository;
 
 @Repository
