@@ -1,4 +1,4 @@
-package com.example.springlearning.model;
+package com.example.springlearning.entity.pojo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

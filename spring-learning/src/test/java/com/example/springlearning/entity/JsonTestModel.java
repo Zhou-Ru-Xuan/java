@@ -1,6 +1,6 @@
-package com.example.springlearning.entity.pojo;
+package com.example.springlearning.entity;
 
-public class PersonMapstructModel {
+public class JsonTestModel {
     private boolean vPoiInPromiseBlackList;
     public boolean isvpoiInPromiseBlackList() {
         return vPoiInPromiseBlackList;
