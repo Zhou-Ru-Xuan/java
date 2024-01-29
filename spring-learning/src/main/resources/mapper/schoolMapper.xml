@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springlearning.mapper.SchoolMapper">
+    <insert id="insertSchool" parameterType="com.example.springlearning.entity.pojo.School">
+        INSERT INTO school (name)
+        VALUES (#{name})
+    </insert>
+
+    <update id="updateSchool" parameterType="com.example.springlearning.entity.pojo.School">
+        UPDATE school
+        SET name = #{name}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteSchoolById" parameterType="java.lang.Long">
+        DELETE
+        FROM school
+        WHERE id = #{id}
+    </delete>
+
+    <select id="selectSchoolById" parameterType="java.lang.Long"
+            resultType="com.example.springlearning.entity.pojo.School">
+        SELECT id, name
+        FROM school
+        WHERE id = #{id}
+    </select>
+</mapper>
