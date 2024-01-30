@@ -4,8 +4,10 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.springlearning.mapper.UserMapper">
     <insert id="insertUser" parameterType="com.example.springlearning.entity.pojo.User">
-        INSERT INTO user (name, age, school_id)
-        VALUES (#{name}, #{age}, #{schoolId})
+        INSERT INTO user (name, age
+        <if test="school != null">, school_id</if>)
+        VALUES (#{name}, #{age}
+        <if test="school != null">, #{schoolId}</if>)
     </insert>
 
     <update id="updateUser" parameterType="com.example.springlearning.entity.pojo.User">
@@ -26,5 +28,12 @@
         SELECT id, name, age, school_id
         FROM user
         WHERE id = #{id}
+    </select>
+
+    <select id="selectLastUser" resultType="com.example.springlearning.entity.pojo.User">
+        SELECT id, name, age, school_id
+        FROM user
+        ORDER BY id DESC
+        LIMIT 1
     </select>
 </mapper>

@@ -11,6 +11,7 @@ import javax.validation.constraints.NotNull;
 @ToString
 @Getter
 @Setter
+@EqualsAndHashCode
 public class User {
     @NotNull(message = "id cannot be null")
     private Long id;
