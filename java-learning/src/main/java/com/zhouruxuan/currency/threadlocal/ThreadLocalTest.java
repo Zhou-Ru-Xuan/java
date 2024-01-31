@@ -1,11 +1,10 @@
 package com.zhouruxuan.currency.threadlocal;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 public class ThreadLocalTest {
-
-    private static final ThreadLocal<String> threadLocal1 = new ThreadLocal<>();
-    private static final ThreadLocal<String> threadLocal2 = new ThreadLocal<>();
-
-
     public static void main(String[] args) {
         Thread t = new Thread(() -> {
             ThreadLocal<Entity> threadLocal1 = new ThreadLocal<>();
@@ -17,5 +16,13 @@ public class ThreadLocalTest {
         });
         t.start();
     }
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    static class Entity {
+        String name;
+    }
+
 }
 
