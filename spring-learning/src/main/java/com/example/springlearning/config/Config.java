@@ -1,4 +1,4 @@
-package com.example.springlearning.bean;
+package com.example.springlearning.config;
 
 import com.example.springlearning.entity.file.FileProcessor;
 import com.example.springlearning.entity.file.FileReader;
