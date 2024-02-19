@@ -12,11 +12,12 @@ public class ApiResult<T> {
     private String message;
     private T data;
 
-    public static ApiResult buildSuccess() {
-        return new ApiResult<>(200, null, true);
+    public ApiResult(String message) {
+        this.message = message;
     }
 
-    public static ApiResult buildError(String message) {
-        return new ApiResult<>(500, message, false);
+    public ApiResult(int code, T data) {
+        this.code = code;
+        this.data = data;
     }
 }
