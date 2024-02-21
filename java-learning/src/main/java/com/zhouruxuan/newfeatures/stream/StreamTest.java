@@ -1,6 +1,8 @@
 package com.zhouruxuan.newfeatures.stream;
 
 import com.google.common.base.Joiner;
+import entity.LogicRoom;
+import entity.RoomType;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
@@ -18,7 +20,9 @@ import java.util.stream.Stream;
  * @date 2023-03-27
  **/
 public class StreamTest {
-
+    /**
+     * 验证orElse的作用范围
+     */
     @Test
     public void testOptional() {
         String s = "";
@@ -26,6 +30,19 @@ public class StreamTest {
         String bDefault = Optional.ofNullable(s).orElse("default");
         Assertions.assertEquals("default", aDefault);
         Assertions.assertEquals(s, bDefault);
+
+        LogicRoom logicRoom = new LogicRoom();
+        Long roomId = null;
+        try {
+            roomId = logicRoom.getRoomType().getRoomId();
+        } catch (Exception e) {
+            Assertions.assertNull(roomId);
+        }
+        Long aDefault1 = Optional.ofNullable(logicRoom)
+                .map(LogicRoom::getRoomType)
+                .map(RoomType::getRoomId)
+                .orElse(888L);
+        Assertions.assertEquals(888L, aDefault1);
     }
 
     @Test
