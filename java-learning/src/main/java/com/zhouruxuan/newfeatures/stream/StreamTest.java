@@ -43,6 +43,12 @@ public class StreamTest {
                 .map(RoomType::getRoomId)
                 .orElse(888L);
         Assertions.assertEquals(888L, aDefault1);
+
+        Long aDefault2 = Optional.of(logicRoom)
+                .map(LogicRoom::getRoomType)
+                .map(RoomType::getRoomId)
+                .orElse(888L);
+        Assertions.assertEquals(888L, aDefault2);
     }
 
     @Test
