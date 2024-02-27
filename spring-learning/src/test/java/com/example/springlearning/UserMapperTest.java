@@ -70,8 +70,4 @@ public class UserMapperTest {
         User returnedUser = userMapper.selectUserById(id);
         Assertions.assertEquals(lastUser, returnedUser);
     }
-
-    private User selectLastUser() {
-        return userMapper.selectLastUser();
-    }
 }
