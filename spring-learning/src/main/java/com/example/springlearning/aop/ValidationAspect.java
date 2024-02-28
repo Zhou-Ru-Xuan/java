@@ -32,7 +32,7 @@ public class ValidationAspect {
         for (Object arg : args) {
             Set<ConstraintViolation<Object>> violations = validator.validate(arg);
             if (!violations.isEmpty()) {
-                return new ApiResult<>(violations.iterator().next().getMessage());
+                return new ApiResult<>(-1,violations.iterator().next().getMessage());
             }
         }
         return joinPoint.proceed();
