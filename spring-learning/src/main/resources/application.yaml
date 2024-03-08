@@ -2,14 +2,13 @@
 numberList: 1,2,3,4,5,6,7,8,9,10
 
 spring:
+  application:
+    name: spring-learning
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: root
-    url: jdbc:mysql://localhost:3306/zrxtest?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher # 解决swagger3与springboot2.7的整合问题
+    url: jdbc:mysql://localhost:3306/zrxtest?allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false
   kafka:
     bootstrap-servers: 127.0.0.1:9092
     producer:
