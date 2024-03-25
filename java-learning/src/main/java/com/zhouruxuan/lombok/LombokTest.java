@@ -1,8 +1,10 @@
 package com.zhouruxuan.lombok;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class LombokTest {
@@ -11,18 +13,37 @@ public class LombokTest {
      */
     @Test
     public void testData() {
-        A a = new A(1);
+        A a = new A(1, 2);
         System.out.println(a.getA());
         a.setA(2);
         System.out.println(a.getA());
+
+    }
+
+    /**
+     * 测试Builder.Default注解的效果
+     */
+    @Test
+    public void testBuilderDefault() {
+        A a1 = new A();
+        Assert.assertEquals(1, a1.getA());
+
+        A build = A.builder().build();
+        Assert.assertEquals(1, build.getA());
     }
 
 }
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-class A{
-    private int a;
+@Builder
+class A {
+
+    @Builder.Default
+    private int a = 1;
+
+    private int b;
 
     public int getA() {
         System.out.println("getA()");
