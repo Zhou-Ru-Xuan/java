@@ -30,6 +30,7 @@ public class LombokTest {
 
         A build = A.builder().build();
         Assert.assertEquals(1, build.getA());
+        Assert.assertEquals(0, build.getB());
     }
 
 }
@@ -43,7 +44,7 @@ class A {
     @Builder.Default
     private int a = 1;
 
-    private int b;
+    private int b = 2;
 
     public int getA() {
         System.out.println("getA()");
