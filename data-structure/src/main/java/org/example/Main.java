@@ -1,7 +1,5 @@
 package org.example;
 
-import org.junit.Test;
-
 import java.io.File;
 
 public class Main {
@@ -10,11 +8,5 @@ public class Main {
         System.out.println(System.getProperty("user.dir"));
         File file = new File("abc.txt");
         System.out.println(file.getAbsolutePath());
-    }
-
-
-    @Test
-    public void test(){
-        System.out.println(System.getProperty("user.dir"));
     }
 }

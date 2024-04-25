@@ -4,9 +4,11 @@ import com.google.common.base.Joiner;
 import entity.LogicRoom;
 import entity.RoomType;
 import org.apache.commons.lang3.StringUtils;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ForkJoinPool;
@@ -20,6 +22,29 @@ import java.util.stream.Stream;
  * @date 2023-03-27
  **/
 public class StreamTest {
+    /**
+     * sort String
+     */
+    @Test
+    public void sortString() {
+        List<String> list = new ArrayList<>();
+        list.add("3");
+        list.add("21");
+        list.add("290");
+        list.add("1");
+        List<String> collect = list.stream().sorted().collect(Collectors.toList());
+        Assert.assertEquals("1", collect.get(0));
+        Assert.assertEquals("21", collect.get(1));
+        Assert.assertEquals("290", collect.get(2));
+        Assert.assertEquals("3", collect.get(3));
+
+        List<BigDecimal> collect1 = list.stream().map(BigDecimal::new).sorted().collect(Collectors.toList());
+        Assert.assertEquals(new BigDecimal("1"), collect1.get(0));
+        Assert.assertEquals(new BigDecimal("3"), collect1.get(1));
+        Assert.assertEquals(new BigDecimal("21"), collect1.get(2));
+        Assert.assertEquals(new BigDecimal("290"), collect1.get(3));
+    }
+
     /**
      * 验证orElse的作用范围
      */

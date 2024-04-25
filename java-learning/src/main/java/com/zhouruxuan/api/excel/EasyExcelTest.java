@@ -5,7 +5,6 @@ import com.alibaba.excel.EasyExcelFactory;
 import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.support.ExcelTypeEnum;
 import com.alibaba.excel.write.metadata.WriteSheet;
-import com.zhouruxuan.api.excel.entity.ErrorCodeEnum;
 import com.zhouruxuan.api.excel.entity.easyexcel.ViewWithAllBoth;
 import com.zhouruxuan.api.excel.entity.easyexcel.ViewWithBoth;
 import com.zhouruxuan.api.excel.entity.easyexcel.ViewWithName;
@@ -193,13 +192,13 @@ public class EasyExcelTest {
         head.add(row3);
         return head;
     }
-
-    @Test
-    public void writeErrorCodeEnum() {
-        // 写入Excel文件
-        String fileName = "/Users/zhouruxuan/Documents/code/java/java/java-learning/src/main/resources/excel/ErrorCodeEnum.xlsx";
-        EasyExcel.write(fileName)
-                .sheet("Sheet1")
-                .doWrite(Arrays.asList(ErrorCodeEnum.values()));
-    }
+    //
+    // @Test
+    // public void writeErrorCodeEnum() {
+    //     // 写入Excel文件
+    //     String fileName = "/Users/zhouruxuan/Documents/code/java/java/java-learning/src/main/resources/excel/ErrorCodeEnum.xlsx";
+    //     EasyExcel.write(fileName)
+    //             .sheet("Sheet1")
+    //             .doWrite(Arrays.asList(ErrorCodeEnum.values()));
+    // }
 }
