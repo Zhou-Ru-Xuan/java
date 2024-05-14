@@ -3,6 +3,7 @@ package com.zhouruxuan.newfeatures.stream;
 import com.google.common.base.Joiner;
 import entity.LogicRoom;
 import entity.RoomType;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.junit.Test;
@@ -22,6 +23,12 @@ import java.util.stream.Stream;
  * @date 2023-03-27
  **/
 public class StreamTest {
+    @Test
+    public void testEmptyMap(){
+        HashMap<Long, String> objectObjectHashMap = new HashMap<>();
+        List<String> collect = objectObjectHashMap.values().stream().distinct().collect(Collectors.toList());
+        Assert.assertTrue(CollectionUtils.isEmpty(collect));
+    }
     /**
      * sort String
      */
