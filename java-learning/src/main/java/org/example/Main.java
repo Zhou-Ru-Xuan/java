@@ -11,6 +11,7 @@ import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
+        System.out.println("Test");
 //        String json = "123";
 //        String json2 = "Invalid_Json";
 //        String json3 = "{}";
