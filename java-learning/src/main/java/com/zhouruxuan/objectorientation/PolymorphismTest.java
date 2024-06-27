@@ -7,10 +7,13 @@ public class PolymorphismTest {
     public void testPolymorphism() {
         SuperClass superClass = new SubClass();
         superClass.print();//1
+        superClass.method();//1
 
-        SuperClass superClass2 = new SuperClass();
-        SubClass subClass = (SubClass) superClass2; //java.lang.ClassCastException
-        subClass.print();
+        // SuperClass superClass2 = new SuperClass();
+        // SubClass subClass = (SubClass) superClass2; //java.lang.ClassCastException
+        // subClass.print();
+
+
     }
 }
 
@@ -18,6 +21,10 @@ class SuperClass {
 
     void print() {
         System.out.println(0);
+    }
+
+    void method() {
+        print();
     }
 }
 
