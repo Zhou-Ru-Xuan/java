@@ -1,11 +1,16 @@
 package org.example;
 
+import com.google.common.base.Joiner;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.TypeAdapter;
+import entity.Animal;
+import org.junit.Assert;
 
 import java.io.IOException;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,6 +34,24 @@ public class Main {
         Map<Long, Object> obejctMap = new HashMap();
         obejctMap.put(new Long(1), new Object());
         System.out.println(obejctMap.containsKey(1L));
+
+        System.out.println(ZonedDateTime.now(ZoneId.of("Asia/Shanghai")).toInstant().toEpochMilli());
+        System.out.println(ZonedDateTime.now(ZoneId.of("Asia/Shanghai")).toInstant().toEpochMilli());
+        System.out.println(ZonedDateTime.now(ZoneId.of("Asia/Shanghai")).toInstant().toEpochMilli());
+        System.out.println(ZonedDateTime.now(ZoneId.of("Asia/Shanghai")).toInstant().toEpochMilli());
+        System.out.println(System.nanoTime());
+        System.out.println(System.nanoTime());
+        System.out.println(System.nanoTime());
+        System.out.println(System.nanoTime());
+        System.out.println(System.nanoTime());
+
+        Object a1 = new Animal("hello", 1);
+        Object a2 = new Animal("hello", 1);
+        Assert.assertEquals(a1, a2);
+
+        String lockKey = Joiner.on("_").join("batchUpdateGiftSpanVpoiByFile", 1, 2);
+        Assert.assertEquals("batchUpdateGiftSpanVpoiByFile_1_2", lockKey);
+
     }
 
     static final TypeAdapter<JsonElement> strictAdapter = new Gson().getAdapter(JsonElement.class);
