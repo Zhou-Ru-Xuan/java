@@ -1,6 +1,7 @@
 package com.zhouruxuan.api.compare;
 
 import com.alibaba.fastjson2.JSONObject;
+import com.google.common.collect.Lists;
 import entity.Goods;
 import entity.LogicRoom;
 import entity.RoomGood;
@@ -13,6 +14,21 @@ import org.junit.Test;
 import java.util.*;
 
 public class CompareTest {
+    /**
+     * 测试Comparable接口
+     */
+    @Test
+    public void testComparable() {
+        CompareBean compareBean1= new CompareBean(true, 1);
+        CompareBean compareBean2= new CompareBean(true, 2);
+        CompareBean compareBean3= new CompareBean(true, 3);
+        ArrayList<CompareBean> list = Lists.newArrayList(compareBean1, compareBean2, compareBean3);
+        System.out.println(list);
+        Collections.sort(list);
+        System.out.println(list);
+
+    }
+
     @Test
     public void testBooleanCmp() {
         CompareBean trueBean = new CompareBean(true);
@@ -118,7 +134,7 @@ public class CompareTest {
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-class CompareBean {
+class CompareBean implements Comparable {
     Boolean a;
     int no;
 
@@ -128,5 +144,17 @@ class CompareBean {
 
     public CompareBean(int no) {
         this.no = no;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        CompareBean other = (CompareBean) o;
+        if (this.no < other.no) {
+            return 1;
+        } else if (this.no == other.no) {
+            return 0;
+        } else {
+            return -1;
+        }
     }
 }
