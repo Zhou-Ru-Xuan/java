@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class FunctionalInterfaceTest {
 
@@ -14,6 +15,20 @@ public class FunctionalInterfaceTest {
 
         Function<String, String> fn = parameter -> parameter + " from lambda";
         Assert.assertEquals("Message  from lambda", add("Message ", fn));
+    }
+
+    @Test
+    public void testSupplier() {
+        Supplier<Integer> step1 = () -> genNum(1);
+        Supplier<Integer> step2 = () -> genNum(2);
+        Supplier<Integer> step3 = () -> genNum(3);
+
+        Assert.assertEquals(3, step3.get().intValue());
+    }
+
+    private int genNum(int num) {
+        System.out.println(num);
+        return num;
     }
 
     public String add(String string, Foo foo) {

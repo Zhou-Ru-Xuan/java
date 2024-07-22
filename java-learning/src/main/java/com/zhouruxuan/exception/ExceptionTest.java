@@ -23,12 +23,19 @@ public class ExceptionTest {
             try {
                 throw new RuntimeException("来自try块中的异常");
             } finally {
-                return;
+                System.out.println("finally");
             }
         } catch (Exception e) {
             e.printStackTrace(System.out);
         }
 
+    }
+
+    /**
+     * try和finally中都发生了异常
+     */
+    @Test
+    public void testTryFinallyException() {
         try {
             try {
                 throw new RuntimeException("来自try块中的异常");
@@ -119,11 +126,12 @@ public class ExceptionTest {
             return 2;
         }
     }
+
     @Test
-    public void testRuntimeException(){
-        try{
+    public void testRuntimeException() {
+        try {
             throw new IllegalStateException();
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("catch");
         }
     }
