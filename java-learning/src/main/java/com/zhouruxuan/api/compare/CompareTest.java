@@ -19,9 +19,9 @@ public class CompareTest {
      */
     @Test
     public void testComparable() {
-        CompareBean compareBean1= new CompareBean(true, 1);
-        CompareBean compareBean2= new CompareBean(true, 2);
-        CompareBean compareBean3= new CompareBean(true, 3);
+        CompareBean compareBean1 = new CompareBean(true, 1);
+        CompareBean compareBean2 = new CompareBean(true, 2);
+        CompareBean compareBean3 = new CompareBean(true, 3);
         ArrayList<CompareBean> list = Lists.newArrayList(compareBean1, compareBean2, compareBean3);
         System.out.println(list);
         Collections.sort(list);
