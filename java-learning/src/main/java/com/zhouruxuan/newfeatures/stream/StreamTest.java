@@ -23,12 +23,27 @@ import java.util.stream.Stream;
  * @date 2023-03-27
  **/
 public class StreamTest {
+    /**
+     * 测试空list的match
+     */
     @Test
-    public void testEmptyMap(){
+    public void testMatch() {
+        List<Integer> list = new ArrayList();
+        Integer i = new Integer(1);
+        Assert.assertTrue(list.stream().allMatch(i::equals));
+        list.add(1);
+        Assert.assertTrue(list.stream().allMatch(i::equals));
+        list.add(2);
+        Assert.assertFalse(list.stream().allMatch(i::equals));
+    }
+
+    @Test
+    public void testEmptyMap() {
         HashMap<Long, String> objectObjectHashMap = new HashMap<>();
         List<String> collect = objectObjectHashMap.values().stream().distinct().collect(Collectors.toList());
         Assert.assertTrue(CollectionUtils.isEmpty(collect));
     }
+
     /**
      * sort String
      */
