@@ -35,6 +35,10 @@ public class StreamTest {
         Assert.assertTrue(list.stream().allMatch(i::equals));
         list.add(2);
         Assert.assertFalse(list.stream().allMatch(i::equals));
+
+        ArrayList<Object> objects = new ArrayList<>();
+        boolean anyMatch = objects.stream().anyMatch(o -> o.equals("123"));
+        Assert.assertFalse(anyMatch);
     }
 
     @Test
