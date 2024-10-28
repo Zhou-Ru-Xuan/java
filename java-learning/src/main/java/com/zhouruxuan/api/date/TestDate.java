@@ -20,6 +20,7 @@ public class TestDate {
     public void convertTime_test() {
         // 解析时间字符串
         LocalTime localTime = null;
+
         try {
             localTime = LocalTime.parse("8:00");
         } catch (Exception e) {
@@ -28,6 +29,11 @@ public class TestDate {
 
         localTime = LocalTime.parse("08:00");
         Assert.assertNotNull(localTime);
+
+        // 格式化为时分格式的时间字符串
+        String timeWithoutSeconds;
+        timeWithoutSeconds = LocalTime.parse("1:30:00", DateTimeFormatter.ofPattern("H:mm:ss")).format(DateTimeFormatter.ofPattern("HH:mm"));
+        Assert.assertEquals("01:30", timeWithoutSeconds);
     }
 
     @org.junit.Test
