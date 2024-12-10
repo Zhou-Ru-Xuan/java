@@ -18,6 +18,49 @@ import static org.junit.jupiter.api.Assertions.fail;
  * @date 2023-03-31
  **/
 public class CompletableFutureTest {
+    /*
+    一个依赖两个的测试
+     */
+    @Test
+    public void one_depend_on_two_test() throws ExecutionException, InterruptedException {
+        ExecutorService executor = Executors.newFixedThreadPool(5);
+        CompletableFuture<Integer> cf1 = CompletableFuture.supplyAsync(() -> {
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            System.out.println(Thread.currentThread().getName() + "," + 1);
+            return 1;
+        }, executor);
+
+        CompletableFuture<Integer> cf2 = CompletableFuture.supplyAsync(() -> {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            System.out.println(Thread.currentThread().getName() + "," + 2);
+            return 2;
+        }, executor);
+
+        CompletableFuture<Integer> cf3 = cf1.thenCombineAsync(cf2, (a, b) -> {
+            return a + b;
+        }).thenApplyAsync(r1 -> {
+                    if (r1 != 3) {
+                        System.out.println(Thread.currentThread().getName() + "," + r1);
+                        return r1;
+                    } else {
+                        System.out.println(Thread.currentThread().getName() + "," + 9);
+                        return 9;
+                    }
+
+                }
+                , executor);
+        Integer integer = cf3.get();
+        System.out.println(integer);
+    }
+
     /**
      * 这个测试方法主要是为了展示使用Future时可能遇到的回调地狱问题。
      * 通过使用Guava提供的ListenableFuture和Futures，我们可以将任务提交到线程池执行，并在任务完成后获取结果。
@@ -212,7 +255,7 @@ public class CompletableFutureTest {
      * @throws InterruptedException
      */
     @Test
-    public void test05() throws ExecutionException, InterruptedException {
+    public void allOf() throws ExecutionException, InterruptedException {
         ExecutorService executor = Executors.newFixedThreadPool(4);
         CompletableFuture<String> step1 = CompletableFuture.supplyAsync(() -> {
             System.out.println("执行【步骤1】");
@@ -237,6 +280,91 @@ public class CompletableFutureTest {
             return result1 + result2 + result3;
         });
         System.out.println("步骤M的结果：" + stepMResult.get());
+
+
+    }
+
+    /**
+     * 依赖前面的多个结果/或者以来前面多个结果中的某一个（短路）
+     *
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
+    @Test
+    public void allOfAsync() throws ExecutionException, InterruptedException {
+        ExecutorService executor = Executors.newFixedThreadPool(4);
+        CompletableFuture<String> step1 = CompletableFuture.supplyAsync(() -> {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            System.out.println("执行【步骤1】");
+            return "【步骤1的执行结果】";
+        }, executor);
+        CompletableFuture<String> step2 = CompletableFuture.supplyAsync(() -> {
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            System.out.println("执行【步骤2】");
+            return "【步骤2的执行结果】";
+        }, executor);
+        CompletableFuture<String> step3 = CompletableFuture.supplyAsync(() -> {
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            System.out.println("执行【步骤3】");
+            return "【步骤3的执行结果】";
+        }, executor);
+
+        CompletableFuture<Void> stepM = CompletableFuture.allOf(step1, step2, step3);
+        CompletableFuture<Void> stepMResult = stepM.thenRunAsync(() -> {
+            try {
+                Thread.sleep(1500);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            // 通过join函数获取返回值
+            String result1 = step1.join();
+            String result2 = step2.join();
+            String result3 = step3.join();
+            System.out.println(result1 + result2 + result3);
+        }, executor);
+        for (int i = 0; i < 10; i++) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            System.out.println("waiting....");
+        }
+    }
+
+    /**
+     * 依赖前面的多个结果/或者以来前面多个结果中的某一个（短路）
+     *
+     * @throws ExecutionException
+     * @throws InterruptedException
+     */
+    @Test
+    public void anyOf() throws ExecutionException, InterruptedException {
+        ExecutorService executor = Executors.newFixedThreadPool(4);
+        CompletableFuture<String> step1 = CompletableFuture.supplyAsync(() -> {
+            System.out.println("执行【步骤1】");
+            return "【步骤1的执行结果】";
+        }, executor);
+        CompletableFuture<String> step2 = CompletableFuture.supplyAsync(() -> {
+            System.out.println("执行【步骤2】");
+            return "【步骤2的执行结果】";
+        }, executor);
+        CompletableFuture<String> step3 = CompletableFuture.supplyAsync(() -> {
+            System.out.println("执行【步骤3】");
+            return "【步骤3的执行结果】";
+        }, executor);
 
         CompletableFuture<Object> stepM2 = CompletableFuture.anyOf(step1, step2, step3);
         System.out.println("步骤M的结果：" + stepM2.get());
