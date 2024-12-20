@@ -11,14 +11,11 @@ import java.util.List;
  * @date 2023-04-11
  **/
 public class ExceptionTest {
+    /**
+     * try_finally，然后外部再catch
+     */
     @Test
-    public void test01() {
-        //System.out.println(t1());
-        //System.out.println(t11());
-        //System.out.println(t2());
-        //System.out.println(t3());
-        //System.out.println(t4());
-
+    public void try_finally_test() {
         try {
             try {
                 throw new RuntimeException("来自try块中的异常");
