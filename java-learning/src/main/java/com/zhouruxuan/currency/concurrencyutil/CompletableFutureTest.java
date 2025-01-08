@@ -27,9 +27,15 @@ public class CompletableFutureTest {
         String msg = "";
         try {
             Object o = future.get();
+        } catch (MyException e) {
+            if (e.getCause() instanceof MyException) {
+                msg = e.getCause().getMessage()+"myexe";
+            } else {
+                e.printStackTrace();
+            }
         } catch (ExecutionException e) {
             if (e.getCause() instanceof MyException) {
-                msg = e.getCause().getMessage();
+                msg = e.getCause().getMessage()+"exe";
             } else {
                 e.printStackTrace();
             }
@@ -37,7 +43,7 @@ public class CompletableFutureTest {
             e.printStackTrace();
         }
 
-        Assert.assertEquals("内部异常", msg);
+        Assert.assertEquals("内部异常exe", msg);
     }
 
     class MyException extends RuntimeException {
