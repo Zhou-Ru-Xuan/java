@@ -2,6 +2,7 @@ package com.zhouruxuan.currency.concurrencyutil;
 
 import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.*;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
@@ -18,6 +19,36 @@ import static org.junit.jupiter.api.Assertions.fail;
  * @date 2023-03-31
  **/
 public class CompletableFutureTest {
+    @Test
+    public void test_get() {
+        CompletableFuture<Object> future = CompletableFuture.supplyAsync(() -> {
+            throw new MyException("内部异常");
+        });
+        String msg = "";
+        try {
+            Object o = future.get();
+        } catch (ExecutionException e) {
+            if (e.getCause() instanceof MyException) {
+                msg = e.getCause().getMessage();
+            } else {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Assert.assertEquals("内部异常", msg);
+    }
+
+    class MyException extends RuntimeException {
+        String msg;
+
+        public MyException(String msg) {
+            super(msg);
+            this.msg = msg;
+        }
+    }
+
     /*
     一个依赖两个的测试
      */
