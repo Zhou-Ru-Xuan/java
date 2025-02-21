@@ -13,6 +13,12 @@ public class AbstrctClassTest {
         System.out.println(null instanceof Boolean);
         System.out.println(a == b);
     }
+
+    @Test
+    public void instantiateAbstractClass() {
+        // 不能实例化
+//        AbstractClass abstractClass = new AbstractClass();
+    }
 }
 
 
