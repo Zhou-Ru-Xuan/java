@@ -22,7 +22,7 @@
         <javaassist.version>3.29.2-GA</javaassist.version>
         <guava.version>31.1-jre</guava.version>
         <transmittable.thread.local.version>2.14.2</transmittable.thread.local.version>
-        <fastjson.version>2.0.0</fastjson.version>
+        <fastjson.version>1.2.83_noneautotype</fastjson.version>
         <commons.lang3.version>3.12.0</commons.lang3.version>
         <commons-collections4.version>4.4</commons-collections4.version>
         <spring.version>5.1.13.RELEASE</spring.version>
@@ -152,7 +152,6 @@
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>

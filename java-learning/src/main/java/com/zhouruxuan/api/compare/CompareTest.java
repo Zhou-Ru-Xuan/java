@@ -1,6 +1,6 @@
 package com.zhouruxuan.api.compare;
 
-import com.alibaba.fastjson2.JSONObject;
+import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
 import entity.Goods;
 import entity.LogicRoom;
