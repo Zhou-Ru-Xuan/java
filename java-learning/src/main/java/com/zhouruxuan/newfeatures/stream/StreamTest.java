@@ -23,6 +23,25 @@ import java.util.stream.Stream;
  * @date 2023-03-27
  **/
 public class StreamTest {
+    @Test
+    public void findFirst_test() {
+        List<Integer> list = new ArrayList<>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        list.add(5);
+        Integer integer = list.stream().findFirst().orElse(-1);
+        Assert.assertEquals(1, integer.intValue());
+
+        list = new ArrayList<>();
+        integer = list.stream().findFirst().orElse(-1);
+        Assert.assertEquals(-1, integer.intValue());
+
+        list = null;
+        integer = Optional.ofNullable(list).orElse(new ArrayList<>()).stream().findFirst().orElse(-1);
+        Assert.assertEquals(-1, integer.intValue());
+    }
     /**
      * 测试空list的match
      */
