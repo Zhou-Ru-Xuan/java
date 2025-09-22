@@ -6,6 +6,47 @@ import java.util.concurrent.*;
 
 public class ThreadPoolExample {
     /**
+     * 测试CallerRunsPolicy
+     *
+     * @throws InterruptedException
+     */
+    @Test
+    public void CallerRunsPolicy_test() throws InterruptedException {
+        // 1. 创建线程池（核心2线程，最大2线程，队列容量1）
+        ThreadPoolExecutor executor = new ThreadPoolExecutor(
+                2,  // corePoolSize
+                2,  // maximumPoolSize
+                0L, TimeUnit.MILLISECONDS,
+                new ArrayBlockingQueue<>(1),  // 队列容量1
+                new ThreadPoolExecutor.CallerRunsPolicy() // 关键策略
+        );
+
+        // 2. 提交6个任务（超过容量）
+        System.out.println("===== 开始提交任务 =====");
+        for (int i = 1; i <= 6; i++) {
+            final int taskId = i;
+            System.out.printf("主线程提交任务-%d%n", taskId);
+            executor.execute(() -> {
+                try {
+                    String threadName = Thread.currentThread().getName();
+                    System.out.printf("[%s] 任务-%d 开始执行...%n", threadName, taskId);
+                    Thread.sleep(5000); // 模拟耗时操作
+                    System.out.printf("[%s] 任务-%d 执行完成 ✅%n", threadName, taskId);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+            });
+            Thread.sleep(100); // 稍微延迟，方便观察
+        }
+
+        // 3. 关闭线程池
+        executor.shutdown();
+        executor.awaitTermination(5, TimeUnit.SECONDS);
+        System.out.println("===== 所有任务处理完成 =====");
+
+    }
+
+    /**
      * execute 执行出现异常，但不会中断主流程
      */
     @Test
