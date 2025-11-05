@@ -65,10 +65,11 @@ public class GenericShardingCalculator {
 
     public static void main(String[] args) {
         // 示例配置：16集群，每集群16库，每库16表
-        GenericShardingCalculator calculator = new GenericShardingCalculator(16, 16, 16);
-        
+//        GenericShardingCalculator calculator = new GenericShardingCalculator(16, 16, 16);
+//        GenericShardingCalculator calculator = new GenericShardingCalculator(2, 4, 8);
+        GenericShardingCalculator calculator = new GenericShardingCalculator(2, 16, 16);
         // 测试用例
-        long[] testGoodsIds = {1199574172L};
+        long[] testGoodsIds = {1261051773L};
         
         System.out.println("分片配置: " + calculator.getConfigDescription());
         for (long goodsId : testGoodsIds) {
